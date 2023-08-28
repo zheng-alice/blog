@@ -1,0 +1,22 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+    - "!blog/"
+
+website:
+  title: "blog"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
