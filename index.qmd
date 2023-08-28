@@ -1,8 +1,10 @@
 ---
-title: blog 💀
+title: blog
 ---
 
 Here is some math: $\sum_{i=0}^n i = \frac{n(n-1)}{2}$.
+
+Here is an emoji: 💀
 
 Here is some code:
 ```{python}
