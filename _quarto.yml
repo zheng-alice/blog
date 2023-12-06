@@ -11,6 +11,8 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+  repo-url: https://github.com/adidenkova/blog
+  repo-actions: [source]
 
 format:
   html:

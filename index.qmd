@@ -2,68 +2,8 @@
 title: blog
 ---
 
-Here is some math: $\sum_{i=0}^n i = \frac{n(n-1)}{2}$.
-
-Here is an emoji: 💀
-
-Here is some code:
-```{python}
-print("Hello, world!")
-```
-Here, `"Hello, world!"` is a `string`.
-
-
-Example of a plot from <https://quarto.org/docs/computations/python.html>:
-
-```{python}
-#| label: fig-polar
-#| fig-cap: "A line plot on a polar axis"
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-r = np.arange(0, 2, 0.01)
-theta = 2 * np.pi * r
-fig, ax = plt.subplots(
-  subplot_kw = {'projection': 'polar'} 
-)
-ax.plot(theta, r)
-ax.set_rticks([0.5, 1, 1.5, 2])
-ax.grid(True)
-plt.show()
-```
-
-
-Interactive plot from <https://quarto.org/docs/interactive/widgets/jupyter.html>:
-
-```{python}
-#| label: fig-iris
-#| fig-cap: "The Iris flower dataset"
-
-import plotly.express as px
-import plotly.io as pio
-df = px.data.iris()
-fig = px.scatter(df, x="sepal_width", y="sepal_length", 
-                 color="species", 
-                 marginal_y="violin", marginal_x="box", 
-                 trendline="ols", template="simple_white")
-fig.show()
-```
-
-
-Interactive plot (with slider) from <https://plotly.com/python/animations>:
-
-```{python}
-#| label: fig-gdp
-#| fig-cap: "GDP per capita vs. life expectancy"
-
-import plotly.express as px
-
-df = px.data.gapminder()
-fig = px.scatter(df, x="gdpPercap", y="lifeExp", animation_frame="year", animation_group="country",
-           size="pop", color="continent", hover_name="country",
-           log_x=True, size_max=55, range_x=[100,100000], range_y=[25,90])
-
-fig["layout"].pop("updatemenus") # optional, drop animation buttons
-fig.show()
-```
+1. [Probability theory and random variables](1-probability.qmd)
+2. [Clustering](2-clustering.qmd)
+3. [Linear and nonlinear regression](3-regression.qmd)
+4. [Classification](4-classification.qmd)
+5. [Anomaly/outlier detection](5-anomaly.qmd)

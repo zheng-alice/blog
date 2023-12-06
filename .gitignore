@@ -1,4 +1,5 @@
-blog
+/blog/
 /.quarto/
 /_site/
 /.luarc.json
+/.vdoc.py
