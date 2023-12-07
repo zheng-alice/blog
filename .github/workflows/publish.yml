@@ -16,6 +16,8 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+      - run: quarto add --no-prompt quarto-ext/include-code-files
+      - run: quarto add --no-prompt leovan/quarto-pseudocode
       
       - name: Install Python and Dependencies
         uses: actions/setup-python@v4

@@ -1,1 +1,10 @@
 /* css styles */
+.definition {
+    text-align: justify;
+    width: 90%;
+    margin-left: 5%;
+}
+.pseudocode-container {
+    width: 86%;
+    margin-left: 7%;
+}

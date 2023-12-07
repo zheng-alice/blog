@@ -1,5 +1,7 @@
 /blog/
 /.quarto/
 /_site/
+/_extensions/
+/__pycache__/
 /.luarc.json
 /.vdoc.py

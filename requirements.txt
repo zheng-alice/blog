@@ -1,7 +1,7 @@
+cvxpy
 jupyter
-notebook
 numpy
 matplotlib
-plotly
 pandas
-statsmodels
+scikit-learn
+seaborn
