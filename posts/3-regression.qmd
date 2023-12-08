@@ -1,4 +1,9 @@
 ---
 title: Linear and nonlinear regression
+subtitle: TODO
+description: TODO
+date: 2023/12/03
+categories:
+  - TODO
 ---
 <!-- Analyze multiple linear and nonlinear regression. -->

@@ -1,5 +1,43 @@
 ---
-title: "About"
+title: "Alice Didenkova"
+about:
+  template: trestles
+  image: profile.jpg
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/adidenkova
+format:
+  html:
+    toc: false
+from: markdown+emoji
 ---
 
-About this site
+A graduate student at Virginia Tech.
+
+## Education
+
+**Virginia Tech** | Blacksburg, VA
+
+Ph.D. Candidate in Computer Science | 2022 - present
+
+**Virginia Tech** | Blacksburg, VA
+
+B.S. in Computer Science, Mathematics | 2019 - 2022
+
+
+## Experience
+
+**Fujitsu Research of America** | Research Intern in Quantum Computing | Summer 2023
+
+**CS 3214: Computer Systems** | Teaching Assistant | 2021 - present
+
+
+## Topics
+
+My interests and current research topics include:
+
+* :atom_symbol: Quantum computing
+* :robot: Reinforcement learning
+
+**Disclaimer:** this blog has been created to fulfill the Final Project requirements of [CS 5805: Machine Learning](https://cs.vt.edu/Graduate/Courses/GradCourseDescriptions.html#CS58056).

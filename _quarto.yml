@@ -10,7 +10,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
   repo-url: https://github.com/adidenkova/blog
   repo-actions: [source]
 

@@ -1,4 +1,9 @@
 ---
 title: Anomaly/outlier detection
+subtitle: TODO
+description: TODO
+date: 2023/12/05
+categories:
+  - TODO
 ---
 <!-- Detect anomaly/outlier behavior and the treatment techniques. -->

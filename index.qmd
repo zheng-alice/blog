@@ -1,9 +1,8 @@
 ---
-title: blog
+title: Blog
+subtitle: CS 5805 Final Project
+listing:
+  contents: posts
+  sort: "date asc"
+  categories: true
 ---
-
-1. [Probability theory and random variables](1-probability.qmd)
-2. [Clustering](2-clustering.qmd)
-3. [Linear and nonlinear regression](3-regression.qmd)
-4. [Classification](4-classification.qmd)
-5. [Anomaly/outlier detection](5-anomaly.qmd)

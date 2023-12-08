@@ -1,10 +1,13 @@
 ---
 title: Probability theory and random variables
 subtitle: Concentration bounds and multi-armed bandits
+description: TODO
+date: 2023/12/01
+categories:
+  - TODO
 bibliography: blog.bib
 filters:
   - pseudocode
-jupyter: python3
 ---
 <!-- Describe the probability theory and random variables. -->
 
