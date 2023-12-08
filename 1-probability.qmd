@@ -8,6 +8,8 @@ jupyter: python3
 ---
 <!-- Describe the probability theory and random variables. -->
 
+## Random variables
+
 Here's the definition; taken from [Wikipedia](https://en.wikipedia.org/wiki/Random_variable#Measure-theoretic_definition), which in order takes it from @fristedt_modern_1996 [page 11].
 
 :::{.definition}
@@ -15,6 +17,47 @@ Here's the definition; taken from [Wikipedia](https://en.wikipedia.org/wiki/Rand
 Let $(\Omega, \mathcal{F}, P)$ be a [probability space](https://en.wikipedia.org/wiki/Probability_space) and $(E, \mathcal{E})$ a [measurable space](https://en.wikipedia.org/wiki/Measurable_space).
 Then an $(E, \mathcal{E})$**-valued random variable** is a measurable function $X : \Omega \to E$, which measures that, for every subset $B \in \mathcal{E}$, its [preimage](https://en.wikipedia.org/wiki/Preimage) is $\mathcal{F}$-measurable; $X^{-1}(B) \in \mathcal{F}$, where $X^{-1}(B) = \{\omega : X(\omega) \in B\}$.
 :::
+
+### Random vectors
+
+### Example
+
+
+## Concentration bounds
+
+### Hoeffding's inequality
+
+### Example
+
+
+## Multi-armed bandits
+
+Based on @slivkins_introduction_2022
+
+```pseudocode
+#| label: alg-explore-exploit
+#| html-indent-size: "1.8em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-&number: true
+
+\begin{algorithm}
+\caption{Stochastic MAB (Framework)}
+\begin{algorithmic}
+\Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.}
+\For{$t = 1, 2, \ldots$}
+  \State Choose an action $a_t \in [K]$.
+  \State Suffer loss $z_t[a_t]$ and also only observe $z_t[a_t]$.
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+```
+
+Here, $z_t$ is a **random vector** sampled from the unknown distributions, i.e., $z_t[a] \sim \mathcal{D}_a$.
+
+### Explore-then-exploit
 
 @ji_online_2022 [Lecture 14]
 ```pseudocode
@@ -40,6 +83,7 @@ Then an $(E, \mathcal{E})$**-valued random variable** is a measurable function $
 $N = 2 \sqrt[3]{T^2 \log T / K^2}$
 
 ```{python}
+#| code-summary: Code for Explore-then-exploit
 from math import log
 from numpy import argmax
 
@@ -71,13 +115,42 @@ class ExploreExploit:
             self.best = argmax(self.totals)
 ```
 
+### Epsilon-greedy
+
+@ji_online_2022 [Lecture 14]
+```pseudocode
+#| label: alg-epsilon-greedy
+#| html-indent-size: "1.8em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-&number: true
+
+\begin{algorithm}
+\caption{Epsilon-greedy}
+\begin{algorithmic}
+\Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.}
+\For{$t = 1, 2, \ldots$}
+  \State Toss a coin with success rate $\epsilon_t$.
+  \If{success}
+    \State Explore: choose an arm uniformly at random.
+  \Else
+    \State Exploit: choose an arm with the highest average reward so far.
+  \EndIf
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+```
+
 ```{python}
+#| code-summary: Code for Epsilon-greedy
 from math import log
 from random import random, randrange
 from numpy import argmax, divide, errstate, inf, nan
 
 class EpsilonGreedy:
-    def __init__(self, K, T):
+    def __init__(self, K, _):
         self.K = K
         self.totals = [0] * K
         self.counts = [0] * K
@@ -106,65 +179,15 @@ class EpsilonGreedy:
     
     def feedback(self, t, a, r):
         '''Receive a reward.'''
-        # Record reward
         self.totals[a] += r
         self.counts[a] += 1
 ```
 
-```{python}
-from random import random
-from numpy.random import normal
-from numpy import zeros, cumsum
-
-# Simulation parameters
-T = 1000    # Number of rounds
-F = 10      # Logging frequency
-S = 100     # Number of trials
-
-# Arms to explore
-means = [0.5, 0.55]
-arms = [random, lambda: normal(means[1], 0.2, 1).item()]
-K = len(arms)
-
-# Algorithms to use
-algs = [ExploreExploit(K, T), EpsilonGreedy(K, T)]
-A = len(algs)
-
-# Evaluate algorithms
-rewards = zeros((S, T//F+1, A))
-for s in range(S):
-    for t in range(1, T+1):
-        for i, alg in enumerate(algs):
-            a = alg.play(t)
-            r = arms[a]()
-            alg.feedback(t, a, r)
-            if t % F == 0:
-                rewards[s, t//F, i] = r
-regret = cumsum(max(means)-rewards, axis=1)
-```
-
-```{python}
-#| code-fold: true
-#| code-summary: "Code for plotting regret"
-#| label: fig-line
-#| fig-cap: "Performance of MAB algorithms"
-import seaborn as sns
-import pandas as pd
-
-# Transform to a format expected by seaborn
-df = pd.DataFrame({
-        "Timestep": [F*((t//A)%(T//F+1)) for t in range(S*(T//F+1)*A)],
-        "Cumulative regret": regret.flatten(),
-        "Algorithm": S*(T//F+1)*[str(x) for x in algs],
-    })
-
-# Plot results
-sns.lineplot(data=df, x="Timestep", y="Cumulative regret", hue="Algorithm");
-```
+### Successive elimination
 
 @ji_online_2022 [Lecture 14]
 ```pseudocode
-#| label: alg-epsilon-greedy
+#| label: alg-elimination
 #| html-indent-size: "1.8em"
 #| html-comment-delimiter: "//"
 #| html-line-number: true
@@ -173,20 +196,69 @@ sns.lineplot(data=df, x="Timestep", y="Cumulative regret", hue="Algorithm");
 #| pdf-line-&number: true
 
 \begin{algorithm}
-\caption{Epsilon-greedy}
+\caption{Successive Elimination}
 \begin{algorithmic}
 \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.}
-\For{$t = 1, 2, \ldots$}
-  \State Toss a coin with success rate $\epsilon_t$.
-  \If{success}
-    \State Explore: choose an arm uniformly at random.
-  \Else
-    \State Exploit: choose an arm with the highest average reward so far.
-  \EndIf
+\State Initialize active arm set $\mathcal{A}_1 = [K]$.
+\For{$p = 1, 2, \ldots$}
+  \State Play each arm in $\mathcal{A}_p$ once.
+  \State Let $t$ be the time at the end of the current phase $p$.
+  \State $\mathcal{A}_{p+1} = \{ a \in \mathcal{A}_p : \mathrm{UCB}_t (a) \geq \max_{a' \in \mathcal{A}_p} \mathrm{LCB}_t (a) \}$
 \EndFor
 \end{algorithmic}
 \end{algorithm}
 ```
+
+```{python}
+#| code-summary: Code for Successive elimination
+from random import random, randrange
+from numpy import argmax, divide, errstate, inf, nan, log, sqrt
+import numpy as np
+
+class SuccessiveElimination:
+    def __init__(self, K, T, delta=1500):
+        self.num = log(2 * K * T / delta) / 2
+        assert self.num > 0, "delta too large"
+        self.totals = [0] * K
+        self.counts = [0] * K
+        self.A = list(range(K))
+        self.idx = 0
+    
+    def __str__(self):
+        return "Successive elimination"
+
+    def _mu(self):
+        with errstate(divide='ignore', invalid='ignore'):
+            mu = divide(self.totals, self.counts)
+        mu[mu == inf] = 0
+        mu[mu == nan] = 0
+        return mu
+
+    def _beta(self):
+        with errstate(divide='ignore'):
+            beta = sqrt(divide(self.num, self.counts))
+        return beta
+
+    def play(self, t):
+        '''Choose an arm to play.'''
+        if self.idx == len(self.A):
+            # Update arm set A
+            u, b = self._mu(), self._beta()
+            lcb, ucb = u-b, u+b
+            self.A = [a for a in self.A if ucb[a] >= np.max(lcb)]
+            self.idx = 0
+        # Play each arm in A
+        a = self.A[self.idx]
+        self.idx += 1
+        return a
+    
+    def feedback(self, t, a, r):
+        '''Receive a reward.'''
+        self.totals[a] += r
+        self.counts[a] += 1
+```
+
+### UCB
 
 @ji_online_2022 [Lecture 15]
 ```pseudocode
@@ -207,4 +279,116 @@ sns.lineplot(data=df, x="Timestep", y="Cumulative regret", hue="Algorithm");
 \EndFor
 \end{algorithmic}
 \end{algorithm}
+```
+
+```{python}
+#| code-summary: Code for UCB
+from random import random, randrange
+from numpy import argmax, divide, errstate, inf, nan, log, sqrt
+import numpy as np
+
+class UCB:
+    def __init__(self, K, T, delta=1):
+        self.num = log(2 * K * T / delta) / 2
+        assert self.num > 0, "delta too large"
+        self.totals = [0] * K
+        self.counts = [0] * K
+    
+    def __str__(self):
+        return "UCB"
+
+    def _mu(self):
+        with errstate(divide='ignore', invalid='ignore'):
+            mu = divide(self.totals, self.counts)
+        mu[mu == inf] = 0
+        mu[mu == nan] = 0
+        return mu
+
+    def _beta(self):
+        with errstate(divide='ignore'):
+            beta = sqrt(divide(self.num, self.counts))
+        return beta
+
+    def play(self, t):
+        '''Choose an arm to play.'''
+        ucb = self._mu() + self._beta()
+        return argmax(ucb)
+    
+    def feedback(self, t, a, r):
+        '''Receive a reward.'''
+        self.totals[a] += r
+        self.counts[a] += 1
+```
+
+### Simulation
+
+#### Technical note
+
+```{python}
+#| code-fold: true
+#| code-summary: Seed random number generators
+from random import seed as py_seed
+from numpy.random import seed as np_seed
+py_seed(5805)
+np_seed(5805)
+```
+
+[Welford's online algorithm](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Welford's_online_algorithm)
+
+```{python}
+#| code-summary: Simulation code
+from random import random
+from numpy.random import normal
+from numpy import zeros, sqrt
+
+# Simulation parameters
+T = 1000    # Number of rounds
+F = 10      # Logging frequency
+N = 100     # Number of trials
+
+# Arms to explore
+means = [0.5, 0.6]
+best = max(means)
+arms = [random, lambda: normal(means[1], 0.2, 1).item()]
+K = len(arms)
+
+# Algorithms to use
+cs = [ExploreExploit, EpsilonGreedy, SuccessiveElimination, UCB]
+A = len(cs)
+
+# Evaluate algorithms
+x = zeros((T//F+1, A))
+s = zeros((T//F+1, A))
+for n in range(1, N+1):
+    for i, c in enumerate(cs):
+        alg = c(K, T)
+        rgt = 0
+        for t in range(1, T+1):
+            a = alg.play(t)
+            r = arms[a]()
+            alg.feedback(t, a, r)
+            rgt += best - r
+            if t % F == 0:
+                # Welford's online algorithm
+                xn1 = x[t//F, i]
+                x[t//F, i] = ((n-1)*xn1 + rgt) / n
+                s[t//F, i] += (rgt - xn1) * (rgt - x[t//F, i])
+s = 0.2*sqrt(s / (N-1))
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: "Code for plotting regret"
+#| label: fig-line
+#| fig-cap: "Performance of MAB algorithms"
+import numpy as np
+import matplotlib.pyplot as plt
+
+t = np.arange(1, T+2, F)
+plt.plot(t, x)
+for i in range(A):
+    plt.fill_between(t, x[:,i]-s[:,i], x[:,i]+s[:,i], alpha=.15)
+plt.xlabel("Timestep")
+plt.ylabel("Regret")
+plt.legend([c(K, T) for c in cs]);
 ```
