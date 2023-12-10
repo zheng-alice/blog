@@ -71,10 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -95,6 +97,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.27.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -127,6 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -140,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -175,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <!-- Identify the common tasks in machine learning/data mining models for clustering. -->
-<div class="cell" data-execution_count="1">
+<div class="cell page-columns page-full" data-execution_count="1">
 <details>
 <summary>Scatterplot matrix code by sklearn</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Directly taken from:</span></span>
@@ -455,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
+<div class="cell-output cell-output-display column-page">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="2-clustering_files/figure-html/cell-2-output-1.png" width="987" height="658" class="figure-img"></p>
@@ -474,54 +496,116 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> np.repeat(rng.rand(n_samples<span class="op">//</span><span class="dv">4</span>, <span class="dv">1</span>), <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">1</span>)   <span class="co"># \ Diagonal</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span> [<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> [<span class="dv">0</span>, <span class="dv">1</span>]</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    ), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">-</span> [<span class="fl">0.5</span>, <span class="fl">0.5</span>], <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3" data-startfrom="27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python" style="counter-reset: source-line 26;"><span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(<span class="va">self</span>, Y):</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    Y <span class="op">=</span> Y.T</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    d, n <span class="op">=</span> Y.shape</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d <span class="op">&lt;</span> n</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 1. Solve sparse optimization problem</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Starting form, equation (5)</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> Variable((n, n))</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    objective <span class="op">=</span> norm(C,<span class="dv">1</span>)</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    constraint <span class="op">=</span> Y <span class="op">@</span> C</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Account for outliers</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.use_E:</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        mu_e <span class="op">=</span> np.partition(np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(Y), axis<span class="op">=</span><span class="dv">0</span>), <span class="op">-</span><span class="dv">2</span>)[<span class="op">-</span><span class="dv">2</span>]</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        l_e <span class="op">=</span> <span class="dv">20</span> <span class="op">/</span> mu_e</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        E <span class="op">=</span> Variable((d, n))</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">+=</span> l_e <span class="op">*</span> norm(E,<span class="dv">1</span>)</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        constraint <span class="op">+=</span> E</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Account for noise</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.use_Z:</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>        G <span class="op">=</span> np.<span class="bu">abs</span>(Y.T <span class="op">@</span> Y)</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        mu_z <span class="op">=</span> np.<span class="bu">min</span>(np.<span class="bu">max</span>(G <span class="op">-</span> np.diag(np.diag(G)), axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        l_z <span class="op">=</span> <span class="dv">800</span> <span class="op">/</span> mu_z</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        Z <span class="op">=</span> Variable((d, n))</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">+=</span> l_z<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> norm(Z,<span class="st">"fro"</span>)<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        constraint <span class="op">+=</span> Z</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    constraints <span class="op">=</span> [Y <span class="op">==</span> constraint, diag(C) <span class="op">==</span> <span class="dv">0</span>]</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> Problem(Minimize(objective), constraints)</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>        prob.solve(solver<span class="op">=</span>ECOS)</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 2. Normalize the columns of C</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> C.value <span class="op">/</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(C.value), axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 3. Form the weights of a similarity graph</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        W <span class="op">=</span> np.<span class="bu">abs</span>(C)</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        W <span class="op">=</span> W <span class="op">+</span> W.T</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 4. Apply spectral clustering on the graph</span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.labels_ <span class="op">=</span> SpectralClustering(</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                n_clusters<span class="op">=</span><span class="va">self</span>.n_clusters,</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>                affinity<span class="op">=</span><span class="st">'precomputed'</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>            ).fit_predict(W)</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> SolverError:</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.labels_ <span class="op">=</span> np.zeros(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Generate a simpler dataset</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.concatenate((</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    rng.rand(<span class="dv">2</span>, n<span class="op">//</span><span class="dv">2</span>) <span class="op">*</span> <span class="fl">0.01</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.repeat(rng.rand(<span class="dv">1</span>, n<span class="op">//</span><span class="dv">2</span>), <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>),  <span class="co"># / Diagonal</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    rng.rand(<span class="dv">2</span>, n<span class="op">//</span><span class="dv">2</span>) <span class="op">*</span> <span class="fl">0.01</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.repeat(rng.rand(<span class="dv">1</span>, n<span class="op">//</span><span class="dv">2</span>), <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>)   <span class="co"># \ Diagonal</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span> [[<span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>]] <span class="op">+</span> [[<span class="dv">0</span>], [<span class="dv">1</span>]]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">-</span> [[<span class="fl">0.5</span>], [<span class="fl">0.5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details open="">
+<summary>Solve and visualize a convex optimization problem</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cvxpy <span class="im">import</span> Variable, Minimize, norm, diag, Problem, ECOS</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable matrix</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> Variable((n, n))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimize ||C||_1</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> Minimize(norm(C,<span class="dv">1</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Subject to Y = YC, diag(C) = 0</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [Y <span class="op">==</span> Y <span class="op">@</span> C, diag(C) <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> Problem(objective, constraints)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>prob.solve(solver<span class="op">=</span>ECOS)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> C.value <span class="op">/</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(C.value), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>px.imshow(C)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="ff0d312a-d310-41e1-83b6-6f9ed6d71b12" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("ff0d312a-d310-41e1-83b6-6f9ed6d71b12")) {                    Plotly.newPlot(                        "ff0d312a-d310-41e1-83b6-6f9ed6d71b12",                        [{"coloraxis":"coloraxis","name":"0","z":[[-7.238473697145243e-15,-0.00381399401187321,0.0022232378954670407,-0.007111811162024872,0.026745707763471707,-0.05989204744478483,-0.007960574976122495,0.025731253228524726,-0.07225733010780294,-0.0004792740799260078,-0.0021254313462934233,-1.954270565767838e-12,-0.006668548034197666,-0.0011062443235423849,-0.0044959435881701815,-0.1336892447799274,-0.0008439096385442703,-0.0006717202210984459,-0.0020157080656634445,-0.0123963214723545],[-0.7060716893551794,-1.4813666533096714e-14,-0.014200384878981401,0.06903170295652147,-0.27308923426542026,0.4814057060497696,0.07891729562668741,-0.2637140213215584,0.5340720881605056,0.0052787464049556705,0.005364263415350338,2.8657753786588918e-11,0.0167447647959166,0.004530343155683426,0.011271669631537438,0.3351788484636503,0.0021465764473575194,0.0018018451492394856,0.005032374446199622,0.031235533559649517],[0.85967196605838,-0.0753940017253434,-3.082108762613095e-14,-0.17896272093671298,0.5018048414625175,-0.7024514551846184,-0.20533070654987282,0.4968238779137317,-0.7450936429165693,-1.0,-0.004225819821951443,-3.493940989563685e-11,-0.019503497246085705,-0.005786927255417021,-0.013278844127276129,-0.34219066010677407,-0.0024286846605609653,-0.0018272484372578869,-0.006155632233745382,-0.028875600617906987],[-0.5491447800037031,0.01775666550905376,-0.01014050399203097,-9.11407895224538e-15,-0.15657228604449522,0.31831887011146703,0.04217440411126697,-0.15040646607830002,0.36653524902571294,0.0024872793588786757,0.005120068693086069,2.0032821105897653e-11,0.015239967969992513,0.0037297852854274293,0.01024325368781405,0.3108662582145092,0.001958348351602584,0.0016539174432245243,0.004548966085287393,0.029307959788041574],[0.3156536257225877,-0.00967200210417448,0.005923375168222432,-0.017854110161707445,-7.19898081173672e-15,-0.15172258631024688,-0.02000930617986109,0.06593493335456263,-0.1810859843516608,-0.0011918662790905965,-0.003439087249159253,-7.802686625089835e-12,-0.012634724072437804,-0.0024316437513935466,-0.008557756887242507,-0.23903816579706566,-0.0015851529636968006,-0.00122911816844981,-0.0038981453926841174,-0.021318321059485786],[-0.21786074398814256,0.006508730700462463,-0.0038777271243247784,0.011936387301454958,-0.04453975858224389,-7.518333483490008e-15,0.013315814617980235,-0.042789702700459724,0.11955909904297139,0.0008218741633158939,0.003564418826404658,4.222593136399472e-12,0.008972244690199735,0.0017094574220460513,0.005993996772527908,0.19634315136570635,0.0011651210551438121,0.001006637494696103,0.0026045266092056827,0.01927695974057478],[-0.5253333717739666,0.016664080493368306,-0.009828119013027777,0.03424248829286967,-0.1443443081097157,0.2974663334523625,-8.63735628763349e-15,-0.13907030801140677,0.34439444693807003,0.0022139473253830733,0.004323686490444071,1.82589948452238e-11,0.015935648477767204,0.003676944003908546,0.010789067811842915,0.3007135339922448,0.0020081260073432287,0.0015834533696836319,0.0049095546289667355,0.02683156305513437],[0.3207548927388353,-0.009796293196686715,0.006090998371199553,-0.01811194998767875,0.06992184033557658,-0.1544860967795026,-0.02038337211073164,-7.223995151734907e-15,-0.18442699932170337,-0.001185743717762706,-0.002370429900258139,-7.755780777874387e-12,-0.014179842426302134,-0.002535200961476549,-0.009717000660260754,-0.23303809330050662,-0.001722920981673823,-0.0011822957974942576,-0.004595670133571502,-0.01842422782365455],[-0.19792668711014133,0.005844608609370243,-0.0034751748027242397,0.010744893277994603,-0.040097299953731055,0.08959334088502531,0.012001163921008588,-0.03855661857395591,-7.558272520939412e-15,0.0007360725402437302,0.0030196632491504578,3.5420731724017444e-12,0.008788126737143395,0.0015795347193301148,0.005907124180607607,0.18123720679029534,0.001122576537205056,0.0009218671851436692,0.0026218276910990245,0.017142706245383558],[-1.0,1.0,-1.0,1.0,-1.0,1.0,1.0,-1.0,1.0,-5.509955355750525e-13,0.00533576951296534,4.3477750568609906e-11,0.01889114366145235,0.007941805270122827,0.012766562472694224,0.3608633191529927,0.0024016639903579285,0.0019595704247667954,0.005776627727154249,0.03258190199626101],[-0.004468023597454002,0.000576415756822837,0.0007331860548423473,0.000985769681573168,-0.00047971525664691273,0.00484746117254445,8.141186358868006e-05,0.0023471679562273133,0.003713355830809125,0.0003722226965386015,-6.5220880576051396e-15,2.5964885704138365e-11,-0.11040312680806863,-0.0033195774608347304,-0.084477179276924,0.5103158997531391,-0.0108379976883808,0.0052178496418659945,-0.05300880596593866,0.22971645113630082],[-0.007264517051091097,0.0010957110397786106,0.0016005968788900724,0.001857992740465924,-0.0006609901834724242,0.008801124751348763,7.984472837798431e-05,0.0048249069102030495,0.006464838581466836,0.0024611385263517806,1.0,5.483886537982416e-13,-1.0,-1.0,-1.0,1.0,-1.0,1.0,-1.0,1.0],[-0.004167038940177726,-0.00030846845488516074,-0.0007936419864912334,-0.00048313198840954023,-0.0011537797314192903,-0.0008298822538804917,0.0003880029714043077,-0.0036761111721745864,0.0009471107390402067,-0.00028582591989843615,-0.07539469044079636,-2.1614151346669872e-11,-6.642350284669878e-15,0.0029595424360832137,0.07401989877819384,-0.455049735225781,0.009380703476499682,-0.0043222638166239115,0.04624767046780864,-0.20085360795974652],[-0.002193909031640289,-0.000799153707026467,-0.001696063975226504,-0.0013051315205714913,-0.001133392731018682,-0.00442151286098647,0.0004367041482851904,-0.006352581723307962,-0.0013739358579836778,-0.0014215305268550356,-0.5963090490043521,-0.29918914833812016,0.6848490716494845,-3.859188950456782e-14,0.6112886680075179,-0.9445012949578163,0.13905843619123343,-0.04264936391741959,0.4752160706660365,-0.8279799807637219],[-0.0028197627615270562,-0.0003912799672810021,-0.0008618144308687144,-0.0006293963004290157,-0.0009330846851034282,-0.0017152759549197607,0.00032985335495168395,-0.003754865881405178,9.834295802802375e-05,-0.0003428178189113104,-0.08858716544856497,-2.5721396342164802e-11,0.11356466909232535,0.003569970728676967,-6.611989820834701e-15,-0.5092142711049492,0.011227961640787135,-0.005247972885657773,0.054440468969942875,-0.23283802999446063],[-0.005113366663691003,0.00016273170986372357,-2.4230647863003957e-05,0.00030487247008412487,-0.0009625849698280476,0.002411820890861126,0.0002758607097001073,-0.0007426226273221412,0.002775913766541018,3.440690328644806e-05,0.004565546684693298,1.201391649451629e-12,-0.005476559453917662,-9.556014673436332e-05,-0.004173044686891263,-1.1613084783884536e-15,-0.000450206482509883,0.00024189137538376798,-0.0025997973814249017,0.013012215041170826],[0.0021616218565875573,-0.0008225579240319751,-0.0013887918965603445,-0.0013746408765113363,-0.00021656737220578128,-0.0057483865115878,0.00015881133444414465,-0.004882059474617435,-0.0033950443541820785,-0.0009999057059617948,-0.29481681681541566,-9.362994857861275e-11,0.36084120759755356,0.011818338232276002,0.29054779720714297,-0.8459800828560098,-9.169519099915204e-15,-0.01724140290754488,0.19185426503102268,-0.5844458601750733],[-0.009525040619337902,0.0010958022534235043,0.00141354946077869,0.0018747155423288798,-0.0011459756068311379,0.009419889103137853,0.00022806829943478643,0.003988627828247172,0.0074816278867342895,0.0015947295972053089,0.49848352717622685,1.0,-0.5639155993595567,-0.017975289996900994,-0.4849907677912284,0.9352007887109891,-0.0805461298484786,-1.7840057632775118e-14,-0.354800482565347,0.7710657175506539],[-0.0003312934243699447,-0.0005339081496312493,-0.0009699945703841186,-0.0008822304877614877,-0.000516358952684697,-0.003282566295628324,0.000218434632612208,-0.0038236256700847834,-0.001437088439572869,-0.000455541870148628,-0.1150822076134814,-3.363259760332232e-11,0.14660733065314602,0.0047831276222131645,0.11263246404061304,-0.5974621676614155,0.014934413976021988,-0.007116283518756557,-6.4655022080462616e-15,-0.29338062617279126],[-0.006601052028247128,0.0004438057152346093,0.0003661078511353611,0.000781150022627893,-0.0010476831504376651,0.004591727644467771,0.0002700009281112336,0.0006553064659224836,0.004278468824752248,0.00020127594334736789,0.043976561710667585,1.217719835326554e-11,-0.05573395995444049,-0.001424123875244856,-0.042410881424007445,0.30584414395667775,-0.004996700514974796,0.0023494603394307004,-0.026359226406164716,-6.0031151540718386e-15]],"type":"heatmap","xaxis":"x","yaxis":"y","hovertemplate":"x: %{x}\u003cbr\u003ey: %{y}\u003cbr\u003ecolor: %{z}\u003cextra\u003e\u003c\u002fextra\u003e"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"scaleanchor":"y","constrain":"domain"},"yaxis":{"anchor":"x","domain":[0.0,1.0],"autorange":"reversed","constrain":"domain"},"coloraxis":{"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('ff0d312a-d310-41e1-83b6-6f9ed6d71b12');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<div class="sourceCode" id="cb5" data-startfrom="27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python" style="counter-reset: source-line 26;"><span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(<span class="va">self</span>, Y):</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    Y <span class="op">=</span> Y.T</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    d, n <span class="op">=</span> Y.shape</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d <span class="op">&lt;</span> n</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">## 1. Solve sparse optimization problem</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Starting form, equation (5)</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> Variable((n, n))</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    objective <span class="op">=</span> norm(C,<span class="dv">1</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    constraint <span class="op">=</span> Y <span class="op">@</span> C</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Account for outliers</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.use_E:</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        mu_e <span class="op">=</span> np.partition(np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(Y), axis<span class="op">=</span><span class="dv">0</span>), <span class="op">-</span><span class="dv">2</span>)[<span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        l_e <span class="op">=</span> <span class="dv">20</span> <span class="op">/</span> mu_e</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>        E <span class="op">=</span> Variable((d, n))</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">+=</span> l_e <span class="op">*</span> norm(E,<span class="dv">1</span>)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        constraint <span class="op">+=</span> E</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Account for noise</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.use_Z:</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        G <span class="op">=</span> np.<span class="bu">abs</span>(Y.T <span class="op">@</span> Y)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        mu_z <span class="op">=</span> np.<span class="bu">min</span>(np.<span class="bu">max</span>(G <span class="op">-</span> np.diag(np.diag(G)), axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        l_z <span class="op">=</span> <span class="dv">800</span> <span class="op">/</span> mu_z</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        Z <span class="op">=</span> Variable((d, n))</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        objective <span class="op">+=</span> l_z<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> norm(Z,<span class="st">"fro"</span>)<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        constraint <span class="op">+=</span> Z</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    constraints <span class="op">=</span> [Y <span class="op">==</span> constraint, diag(C) <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    prob <span class="op">=</span> Problem(Minimize(objective), constraints)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        prob.solve(solver<span class="op">=</span>ECOS)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 2. Normalize the columns of C</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        C <span class="op">=</span> C.value <span class="op">/</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(C.value), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 3. Form the weights of a similarity graph</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>        W <span class="op">=</span> np.<span class="bu">abs</span>(C)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>        W <span class="op">=</span> W <span class="op">+</span> W.T</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>        <span class="co">## 4. Apply spectral clustering on the graph</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.labels_ <span class="op">=</span> SpectralClustering(</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>                n_clusters<span class="op">=</span><span class="va">self</span>.n_clusters,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>                affinity<span class="op">=</span><span class="st">'precomputed'</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>            ).fit_predict(W)</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> SolverError:</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.labels_ <span class="op">=</span> np.zeros(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 <!-- -->
@@ -548,6 +632,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -811,307 +1010,343 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="adidenkova/blog-comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Clustering</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> Sparse subspace clustering</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> TODO</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023/12/02</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">  - TODO</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="an">filters:</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">- include-code-files</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Identify the common tasks in machine learning/data mining models for clustering. --&gt;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Scatterplot matrix code by sklearn"</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A comparison of various clustering methods.</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Directly taken from:</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> cycle, islice</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> cluster, datasets, mixture</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> kneighbors_graph</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ssc <span class="im">import</span> linear, SparseSubspaceClustering</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate datasets. We choose the size big enough to see the scalability</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># of the algorithms, but not too big to avoid too long running times</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">200</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">5805</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>noisy_circles <span class="op">=</span> datasets.make_circles(</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span>n_samples, factor<span class="op">=</span><span class="fl">0.5</span>, noise<span class="op">=</span><span class="fl">0.05</span>, random_state<span class="op">=</span>seed</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>noisy_moons <span class="op">=</span> datasets.make_moons(n_samples<span class="op">=</span>n_samples, noise<span class="op">=</span><span class="fl">0.05</span>, random_state<span class="op">=</span>seed)</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>blobs <span class="op">=</span> datasets.make_blobs(n_samples<span class="op">=</span>n_samples, random_state<span class="op">=</span>seed)</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.RandomState(seed)</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>no_structure <span class="op">=</span> rng.rand(n_samples, <span class="dv">2</span>), <span class="va">None</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Anisotropicly distributed data</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> <span class="dv">5805</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> datasets.make_blobs(n_samples<span class="op">=</span>n_samples, random_state<span class="op">=</span>random_state)</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>transformation <span class="op">=</span> [[<span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.6</span>], [<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">0.8</span>]]</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>X_aniso <span class="op">=</span> np.dot(X, transformation)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>aniso <span class="op">=</span> (X_aniso, y)</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co"># blobs with varied variances</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>varied <span class="op">=</span> datasets.make_blobs(</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span>n_samples, cluster_std<span class="op">=</span>[<span class="fl">1.0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>], random_state<span class="op">=</span>random_state</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up cluster parameters</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">6.5</span>))</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span><span class="fl">0.02</span>, right<span class="op">=</span><span class="fl">0.98</span>, bottom<span class="op">=</span><span class="fl">0.001</span>, top<span class="op">=</span><span class="fl">0.95</span>, wspace<span class="op">=</span><span class="fl">0.01</span>, hspace<span class="op">=</span><span class="fl">0.01</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>plot_num <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>default_base <span class="op">=</span> {</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quantile"</span>: <span class="fl">0.3</span>,</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eps"</span>: <span class="fl">0.3</span>,</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"damping"</span>: <span class="fl">0.9</span>,</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">200</span>,</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_neighbors"</span>: <span class="dv">3</span>,</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_clusters"</span>: <span class="dv">3</span>,</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xi"</span>: <span class="fl">0.05</span>,</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"min_cluster_size"</span>: <span class="fl">0.1</span>,</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"allow_single_cluster"</span>: <span class="va">True</span>,</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hdbscan_min_cluster_size"</span>: <span class="dv">15</span>,</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hdbscan_min_samples"</span>: <span class="dv">3</span>,</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"random_state"</span>: <span class="dv">42</span>,</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> [</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    (</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>        noisy_circles,</span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>            <span class="st">"damping"</span>: <span class="fl">0.77</span>,</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">240</span>,</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>            <span class="st">"quantile"</span>: <span class="fl">0.2</span>,</span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_clusters"</span>: <span class="dv">2</span>,</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.08</span>,</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    (</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>        noisy_moons,</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>            <span class="st">"damping"</span>: <span class="fl">0.75</span>,</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">220</span>,</span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_clusters"</span>: <span class="dv">2</span>,</span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.1</span>,</span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>    (</span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>        varied,</span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>            <span class="st">"eps"</span>: <span class="fl">0.18</span>,</span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_neighbors"</span>: <span class="dv">2</span>,</span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.01</span>,</span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>,</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>    (</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>        aniso,</span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>            <span class="st">"eps"</span>: <span class="fl">0.15</span>,</span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_neighbors"</span>: <span class="dv">2</span>,</span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.1</span>,</span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>,</span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>        },</span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>    (blobs, {<span class="st">"min_samples"</span>: <span class="dv">7</span>, <span class="st">"xi"</span>: <span class="fl">0.1</span>, <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>}),</span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>    (linear, {}),</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>    (no_structure, {}),</span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i_dataset, (dataset, algo_params) <span class="kw">in</span> <span class="bu">enumerate</span>(datasets):</span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update parameters with dataset-specific values</span></span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> default_base.copy()</span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>    params.update(algo_params)</span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> dataset</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>    <span class="co"># normalize dataset for easier parameter selection</span></span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> StandardScaler().fit_transform(X)</span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>    <span class="co"># estimate bandwidth for mean shift</span></span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>    bandwidth <span class="op">=</span> cluster.estimate_bandwidth(X, quantile<span class="op">=</span>params[<span class="st">"quantile"</span>])</span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>    <span class="co"># connectivity matrix for structured Ward</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>    connectivity <span class="op">=</span> kneighbors_graph(</span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>        X, n_neighbors<span class="op">=</span>params[<span class="st">"n_neighbors"</span>], include_self<span class="op">=</span><span class="va">False</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make connectivity symmetric</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>    connectivity <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (connectivity <span class="op">+</span> connectivity.T)</span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ============</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create cluster objects</span></span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ============</span></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>    ms <span class="op">=</span> cluster.MeanShift(bandwidth<span class="op">=</span>bandwidth, bin_seeding<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>    two_means <span class="op">=</span> cluster.MiniBatchKMeans(</span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>        n_init<span class="op">=</span><span class="st">"auto"</span>,</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>    ward <span class="op">=</span> cluster.AgglomerativeClustering(</span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>], linkage<span class="op">=</span><span class="st">"ward"</span>, connectivity<span class="op">=</span>connectivity</span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>    spectral <span class="op">=</span> cluster.SpectralClustering(</span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>        eigen_solver<span class="op">=</span><span class="st">"arpack"</span>,</span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>        affinity<span class="op">=</span><span class="st">"nearest_neighbors"</span>,</span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>    dbscan <span class="op">=</span> cluster.DBSCAN(eps<span class="op">=</span>params[<span class="st">"eps"</span>])</span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>    hdbscan <span class="op">=</span> cluster.HDBSCAN(</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>        min_samples<span class="op">=</span>params[<span class="st">"hdbscan_min_samples"</span>],</span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>        min_cluster_size<span class="op">=</span>params[<span class="st">"hdbscan_min_cluster_size"</span>],</span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a>        allow_single_cluster<span class="op">=</span>params[<span class="st">"allow_single_cluster"</span>],</span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>    optics <span class="op">=</span> cluster.OPTICS(</span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>        min_samples<span class="op">=</span>params[<span class="st">"min_samples"</span>],</span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>        xi<span class="op">=</span>params[<span class="st">"xi"</span>],</span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>        min_cluster_size<span class="op">=</span>params[<span class="st">"min_cluster_size"</span>],</span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>    affinity_propagation <span class="op">=</span> cluster.AffinityPropagation(</span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>        damping<span class="op">=</span>params[<span class="st">"damping"</span>],</span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>        preference<span class="op">=</span>params[<span class="st">"preference"</span>],</span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>    average_linkage <span class="op">=</span> cluster.AgglomerativeClustering(</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>        linkage<span class="op">=</span><span class="st">"average"</span>,</span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>        metric<span class="op">=</span><span class="st">"cityblock"</span>,</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>        connectivity<span class="op">=</span>connectivity,</span>
-<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>    birch <span class="op">=</span> cluster.Birch(n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>])</span>
-<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>    gmm <span class="op">=</span> mixture.GaussianMixture(</span>
-<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>        n_components<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
-<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>        covariance_type<span class="op">=</span><span class="st">"full"</span>,</span>
-<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
-<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>    ssc <span class="op">=</span> SparseSubspaceClustering(</span>
-<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
-<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>    clustering_algorithms <span class="op">=</span> (</span>
-<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"MiniBatch</span><span class="ch">\n</span><span class="st">KMeans"</span>, two_means),</span>
-<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Affinity</span><span class="ch">\n</span><span class="st">Propagation"</span>, affinity_propagation),</span>
-<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"MeanShift"</span>, ms),</span>
-<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Spectral</span><span class="ch">\n</span><span class="st">Clustering"</span>, spectral),</span>
-<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Ward"</span>, ward),</span>
-<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Agglomerative</span><span class="ch">\n</span><span class="st">Clustering"</span>, average_linkage),</span>
-<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"DBSCAN"</span>, dbscan),</span>
-<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"HDBSCAN"</span>, hdbscan),</span>
-<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"OPTICS"</span>, optics),</span>
-<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"BIRCH"</span>, birch),</span>
-<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Gaussian</span><span class="ch">\n</span><span class="st">Mixture"</span>, gmm),</span>
-<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Sparse</span><span class="ch">\n</span><span class="st">Subspace</span><span class="ch">\n</span><span class="st">Clustering"</span>, ssc),</span>
-<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, algorithm <span class="kw">in</span> clustering_algorithms:</span>
-<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>        t0 <span class="op">=</span> time.time()</span>
-<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>        <span class="co"># catch warnings related to kneighbors_graph, subspace clustering</span></span>
-<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> warnings.catch_warnings():</span>
-<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
-<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
-<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"the number of connected components of the "</span></span>
-<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">"connectivity matrix is [0-9]{1,2}"</span></span>
-<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" &gt; 1. Completing it to avoid stopping the tree early."</span>,</span>
-<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
-<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"Graph is not fully connected, spectral embedding"</span></span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" may not work as expected."</span>,</span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"Solution may be inaccurate. Try another solver,"</span></span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" adjusting the solver settings, or solve with"</span></span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" verbose=True for more information."</span>,</span>
-<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
-<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>            algorithm.fit(X)</span>
-<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">=</span> time.time()</span>
-<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(algorithm, <span class="st">"labels_"</span>):</span>
-<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> algorithm.labels_.astype(<span class="bu">int</span>)</span>
-<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> algorithm.predict(X)</span>
-<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>        plt.subplot(<span class="bu">len</span>(datasets), <span class="bu">len</span>(clustering_algorithms), plot_num)</span>
-<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i_dataset <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a>            plt.title(name, size<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a>        colors <span class="op">=</span> np.array(</span>
-<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>            <span class="bu">list</span>(</span>
-<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>                islice(</span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>                    cycle(</span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>                        [</span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#377eb8"</span>,</span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#ff7f00"</span>,</span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#4daf4a"</span>,</span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#f781bf"</span>,</span>
-<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#a65628"</span>,</span>
-<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#984ea3"</span>,</span>
-<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#999999"</span>,</span>
-<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#e41a1c"</span>,</span>
-<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#dede00"</span>,</span>
-<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a>                        ]</span>
-<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a>                    ),</span>
-<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">int</span>(<span class="bu">max</span>(y_pred) <span class="op">+</span> <span class="dv">1</span>),</span>
-<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add black color for outliers (if any)</span></span>
-<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a>        colors <span class="op">=</span> np.append(colors, [<span class="st">"#000000"</span>])</span>
-<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a>        plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">5</span>, color<span class="op">=</span>colors[y_pred])</span>
-<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a>        plt.xlim(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a>        plt.ylim(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>        plt.xticks(())</span>
-<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a>        plt.yticks(())</span>
-<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a>        plt.text(</span>
-<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a>            <span class="fl">0.99</span>,</span>
-<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a>            <span class="fl">0.01</span>,</span>
-<span id="cb4-287"><a href="#cb4-287" aria-hidden="true" tabindex="-1"></a>            (<span class="st">"</span><span class="sc">%.2f</span><span class="st">s"</span> <span class="op">%</span> (t1 <span class="op">-</span> t0)).lstrip(<span class="st">"0"</span>),</span>
-<span id="cb4-288"><a href="#cb4-288" aria-hidden="true" tabindex="-1"></a>            transform<span class="op">=</span>plt.gca().transAxes,</span>
-<span id="cb4-289"><a href="#cb4-289" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span><span class="fl">7.5</span>,</span>
-<span id="cb4-290"><a href="#cb4-290" aria-hidden="true" tabindex="-1"></a>            horizontalalignment<span class="op">=</span><span class="st">"right"</span>,</span>
-<span id="cb4-291"><a href="#cb4-291" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-292"><a href="#cb4-292" aria-hidden="true" tabindex="-1"></a>        plot_num <span class="op">+=</span> <span class="dv">1</span></span>
-<span id="cb4-293"><a href="#cb4-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-294"><a href="#cb4-294" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb4-295"><a href="#cb4-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-296"><a href="#cb4-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-297"><a href="#cb4-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python include="ssc.py" start-line=9 end-line=18}</span></span>
-<span id="cb4-298"><a href="#cb4-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-299"><a href="#cb4-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-300"><a href="#cb4-300" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python include="ssc.py" start-line=27 dedent=4}</span></span>
-<span id="cb4-301"><a href="#cb4-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
-<span id="cb4-302"><a href="#cb4-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> Clustering</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> Sparse subspace clustering</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> TODO</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 2023/12/02</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">  - TODO</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="an">filters:</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">- include-code-files</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Identify the common tasks in machine learning/data mining models for clustering. --&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: "Scatterplot matrix code by sklearn"</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: A comparison of various clustering methods.</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Directly taken from:</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> cycle, islice</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> cluster, datasets, mixture</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> kneighbors_graph</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ssc <span class="im">import</span> linear, SparseSubspaceClustering</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate datasets. We choose the size big enough to see the scalability</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># of the algorithms, but not too big to avoid too long running times</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>seed <span class="op">=</span> <span class="dv">5805</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>noisy_circles <span class="op">=</span> datasets.make_circles(</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span>n_samples, factor<span class="op">=</span><span class="fl">0.5</span>, noise<span class="op">=</span><span class="fl">0.05</span>, random_state<span class="op">=</span>seed</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>noisy_moons <span class="op">=</span> datasets.make_moons(n_samples<span class="op">=</span>n_samples, noise<span class="op">=</span><span class="fl">0.05</span>, random_state<span class="op">=</span>seed)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>blobs <span class="op">=</span> datasets.make_blobs(n_samples<span class="op">=</span>n_samples, random_state<span class="op">=</span>seed)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.RandomState(seed)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>no_structure <span class="op">=</span> rng.rand(n_samples, <span class="dv">2</span>), <span class="va">None</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Anisotropicly distributed data</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>random_state <span class="op">=</span> <span class="dv">5805</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> datasets.make_blobs(n_samples<span class="op">=</span>n_samples, random_state<span class="op">=</span>random_state)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>transformation <span class="op">=</span> [[<span class="fl">0.6</span>, <span class="op">-</span><span class="fl">0.6</span>], [<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">0.8</span>]]</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>X_aniso <span class="op">=</span> np.dot(X, transformation)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>aniso <span class="op">=</span> (X_aniso, y)</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="co"># blobs with varied variances</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>varied <span class="op">=</span> datasets.make_blobs(</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span>n_samples, cluster_std<span class="op">=</span>[<span class="fl">1.0</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span>], random_state<span class="op">=</span>random_state</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up cluster parameters</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># ============</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="fl">10.5</span>, <span class="fl">6.5</span>))</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>plt.subplots_adjust(</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    left<span class="op">=</span><span class="fl">0.02</span>, right<span class="op">=</span><span class="fl">0.98</span>, bottom<span class="op">=</span><span class="fl">0.001</span>, top<span class="op">=</span><span class="fl">0.95</span>, wspace<span class="op">=</span><span class="fl">0.01</span>, hspace<span class="op">=</span><span class="fl">0.01</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>plot_num <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>default_base <span class="op">=</span> {</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quantile"</span>: <span class="fl">0.3</span>,</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"eps"</span>: <span class="fl">0.3</span>,</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"damping"</span>: <span class="fl">0.9</span>,</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">200</span>,</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_neighbors"</span>: <span class="dv">3</span>,</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"n_clusters"</span>: <span class="dv">3</span>,</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xi"</span>: <span class="fl">0.05</span>,</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"min_cluster_size"</span>: <span class="fl">0.1</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"allow_single_cluster"</span>: <span class="va">True</span>,</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hdbscan_min_cluster_size"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hdbscan_min_samples"</span>: <span class="dv">3</span>,</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    <span class="st">"random_state"</span>: <span class="dv">42</span>,</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> [</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>        noisy_circles,</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>            <span class="st">"damping"</span>: <span class="fl">0.77</span>,</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">240</span>,</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>            <span class="st">"quantile"</span>: <span class="fl">0.2</span>,</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_clusters"</span>: <span class="dv">2</span>,</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.08</span>,</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>        noisy_moons,</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>            <span class="st">"damping"</span>: <span class="fl">0.75</span>,</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>            <span class="st">"preference"</span>: <span class="op">-</span><span class="dv">220</span>,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_clusters"</span>: <span class="dv">2</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.1</span>,</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>        varied,</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>            <span class="st">"eps"</span>: <span class="fl">0.18</span>,</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_neighbors"</span>: <span class="dv">2</span>,</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.01</span>,</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>,</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>    (</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>        aniso,</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>            <span class="st">"eps"</span>: <span class="fl">0.15</span>,</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>            <span class="st">"n_neighbors"</span>: <span class="dv">2</span>,</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_samples"</span>: <span class="dv">7</span>,</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>            <span class="st">"xi"</span>: <span class="fl">0.1</span>,</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>            <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>,</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>    (blobs, {<span class="st">"min_samples"</span>: <span class="dv">7</span>, <span class="st">"xi"</span>: <span class="fl">0.1</span>, <span class="st">"min_cluster_size"</span>: <span class="fl">0.2</span>}),</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>    (linear, {}),</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>    (no_structure, {}),</span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i_dataset, (dataset, algo_params) <span class="kw">in</span> <span class="bu">enumerate</span>(datasets):</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>    <span class="co"># update parameters with dataset-specific values</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> default_base.copy()</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>    params.update(algo_params)</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> dataset</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    <span class="co"># normalize dataset for easier parameter selection</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> StandardScaler().fit_transform(X)</span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>    <span class="co"># estimate bandwidth for mean shift</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>    bandwidth <span class="op">=</span> cluster.estimate_bandwidth(X, quantile<span class="op">=</span>params[<span class="st">"quantile"</span>])</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>    <span class="co"># connectivity matrix for structured Ward</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>    connectivity <span class="op">=</span> kneighbors_graph(</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>        X, n_neighbors<span class="op">=</span>params[<span class="st">"n_neighbors"</span>], include_self<span class="op">=</span><span class="va">False</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    <span class="co"># make connectivity symmetric</span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    connectivity <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (connectivity <span class="op">+</span> connectivity.T)</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ============</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create cluster objects</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ============</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>    ms <span class="op">=</span> cluster.MeanShift(bandwidth<span class="op">=</span>bandwidth, bin_seeding<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>    two_means <span class="op">=</span> cluster.MiniBatchKMeans(</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>        n_init<span class="op">=</span><span class="st">"auto"</span>,</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>    ward <span class="op">=</span> cluster.AgglomerativeClustering(</span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>], linkage<span class="op">=</span><span class="st">"ward"</span>, connectivity<span class="op">=</span>connectivity</span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>    spectral <span class="op">=</span> cluster.SpectralClustering(</span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>        eigen_solver<span class="op">=</span><span class="st">"arpack"</span>,</span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>        affinity<span class="op">=</span><span class="st">"nearest_neighbors"</span>,</span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>    dbscan <span class="op">=</span> cluster.DBSCAN(eps<span class="op">=</span>params[<span class="st">"eps"</span>])</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>    hdbscan <span class="op">=</span> cluster.HDBSCAN(</span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>        min_samples<span class="op">=</span>params[<span class="st">"hdbscan_min_samples"</span>],</span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>        min_cluster_size<span class="op">=</span>params[<span class="st">"hdbscan_min_cluster_size"</span>],</span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>        allow_single_cluster<span class="op">=</span>params[<span class="st">"allow_single_cluster"</span>],</span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>    optics <span class="op">=</span> cluster.OPTICS(</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>        min_samples<span class="op">=</span>params[<span class="st">"min_samples"</span>],</span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>        xi<span class="op">=</span>params[<span class="st">"xi"</span>],</span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>        min_cluster_size<span class="op">=</span>params[<span class="st">"min_cluster_size"</span>],</span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>    affinity_propagation <span class="op">=</span> cluster.AffinityPropagation(</span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>        damping<span class="op">=</span>params[<span class="st">"damping"</span>],</span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>        preference<span class="op">=</span>params[<span class="st">"preference"</span>],</span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>    average_linkage <span class="op">=</span> cluster.AgglomerativeClustering(</span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>        linkage<span class="op">=</span><span class="st">"average"</span>,</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>        metric<span class="op">=</span><span class="st">"cityblock"</span>,</span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>        connectivity<span class="op">=</span>connectivity,</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>    birch <span class="op">=</span> cluster.Birch(n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>])</span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>    gmm <span class="op">=</span> mixture.GaussianMixture(</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>        n_components<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>        covariance_type<span class="op">=</span><span class="st">"full"</span>,</span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>        random_state<span class="op">=</span>params[<span class="st">"random_state"</span>],</span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>    ssc <span class="op">=</span> SparseSubspaceClustering(</span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>        n_clusters<span class="op">=</span>params[<span class="st">"n_clusters"</span>],</span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>    clustering_algorithms <span class="op">=</span> (</span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"MiniBatch</span><span class="ch">\n</span><span class="st">KMeans"</span>, two_means),</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Affinity</span><span class="ch">\n</span><span class="st">Propagation"</span>, affinity_propagation),</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"MeanShift"</span>, ms),</span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Spectral</span><span class="ch">\n</span><span class="st">Clustering"</span>, spectral),</span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Ward"</span>, ward),</span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Agglomerative</span><span class="ch">\n</span><span class="st">Clustering"</span>, average_linkage),</span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"DBSCAN"</span>, dbscan),</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"HDBSCAN"</span>, hdbscan),</span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"OPTICS"</span>, optics),</span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"BIRCH"</span>, birch),</span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Gaussian</span><span class="ch">\n</span><span class="st">Mixture"</span>, gmm),</span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>        (<span class="st">"Sparse</span><span class="ch">\n</span><span class="st">Subspace</span><span class="ch">\n</span><span class="st">Clustering"</span>, ssc),</span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> name, algorithm <span class="kw">in</span> clustering_algorithms:</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>        t0 <span class="op">=</span> time.time()</span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>        <span class="co"># catch warnings related to kneighbors_graph, subspace clustering</span></span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"the number of connected components of the "</span></span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">"connectivity matrix is [0-9]{1,2}"</span></span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" &gt; 1. Completing it to avoid stopping the tree early."</span>,</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"Graph is not fully connected, spectral embedding"</span></span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" may not work as expected."</span>,</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>            warnings.filterwarnings(</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>                <span class="st">"ignore"</span>,</span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>                message<span class="op">=</span><span class="st">"Solution may be inaccurate. Try another solver,"</span></span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" adjusting the solver settings, or solve with"</span></span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a>                <span class="op">+</span> <span class="st">" verbose=True for more information."</span>,</span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>                category<span class="op">=</span><span class="pp">UserWarning</span>,</span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>            algorithm.fit(X)</span>
+<span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-247"><a href="#cb6-247" aria-hidden="true" tabindex="-1"></a>        t1 <span class="op">=</span> time.time()</span>
+<span id="cb6-248"><a href="#cb6-248" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">hasattr</span>(algorithm, <span class="st">"labels_"</span>):</span>
+<span id="cb6-249"><a href="#cb6-249" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> algorithm.labels_.astype(<span class="bu">int</span>)</span>
+<span id="cb6-250"><a href="#cb6-250" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-251"><a href="#cb6-251" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> algorithm.predict(X)</span>
+<span id="cb6-252"><a href="#cb6-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-253"><a href="#cb6-253" aria-hidden="true" tabindex="-1"></a>        plt.subplot(<span class="bu">len</span>(datasets), <span class="bu">len</span>(clustering_algorithms), plot_num)</span>
+<span id="cb6-254"><a href="#cb6-254" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i_dataset <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb6-255"><a href="#cb6-255" aria-hidden="true" tabindex="-1"></a>            plt.title(name, size<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb6-256"><a href="#cb6-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-257"><a href="#cb6-257" aria-hidden="true" tabindex="-1"></a>        colors <span class="op">=</span> np.array(</span>
+<span id="cb6-258"><a href="#cb6-258" aria-hidden="true" tabindex="-1"></a>            <span class="bu">list</span>(</span>
+<span id="cb6-259"><a href="#cb6-259" aria-hidden="true" tabindex="-1"></a>                islice(</span>
+<span id="cb6-260"><a href="#cb6-260" aria-hidden="true" tabindex="-1"></a>                    cycle(</span>
+<span id="cb6-261"><a href="#cb6-261" aria-hidden="true" tabindex="-1"></a>                        [</span>
+<span id="cb6-262"><a href="#cb6-262" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#377eb8"</span>,</span>
+<span id="cb6-263"><a href="#cb6-263" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#ff7f00"</span>,</span>
+<span id="cb6-264"><a href="#cb6-264" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#4daf4a"</span>,</span>
+<span id="cb6-265"><a href="#cb6-265" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#f781bf"</span>,</span>
+<span id="cb6-266"><a href="#cb6-266" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#a65628"</span>,</span>
+<span id="cb6-267"><a href="#cb6-267" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#984ea3"</span>,</span>
+<span id="cb6-268"><a href="#cb6-268" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#999999"</span>,</span>
+<span id="cb6-269"><a href="#cb6-269" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#e41a1c"</span>,</span>
+<span id="cb6-270"><a href="#cb6-270" aria-hidden="true" tabindex="-1"></a>                            <span class="st">"#dede00"</span>,</span>
+<span id="cb6-271"><a href="#cb6-271" aria-hidden="true" tabindex="-1"></a>                        ]</span>
+<span id="cb6-272"><a href="#cb6-272" aria-hidden="true" tabindex="-1"></a>                    ),</span>
+<span id="cb6-273"><a href="#cb6-273" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">int</span>(<span class="bu">max</span>(y_pred) <span class="op">+</span> <span class="dv">1</span>),</span>
+<span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>        <span class="co"># add black color for outliers (if any)</span></span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>        colors <span class="op">=</span> np.append(colors, [<span class="st">"#000000"</span>])</span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>        plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">5</span>, color<span class="op">=</span>colors[y_pred])</span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>        plt.xlim(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>        plt.ylim(<span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a>        plt.xticks(())</span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>        plt.yticks(())</span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a>        plt.text(</span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>            <span class="fl">0.99</span>,</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>            <span class="fl">0.01</span>,</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>            (<span class="st">"</span><span class="sc">%.2f</span><span class="st">s"</span> <span class="op">%</span> (t1 <span class="op">-</span> t0)).lstrip(<span class="st">"0"</span>),</span>
+<span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a>            transform<span class="op">=</span>plt.gca().transAxes,</span>
+<span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span><span class="fl">7.5</span>,</span>
+<span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a>            horizontalalignment<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb6-292"><a href="#cb6-292" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-293"><a href="#cb6-293" aria-hidden="true" tabindex="-1"></a>        plot_num <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb6-294"><a href="#cb6-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-295"><a href="#cb6-295" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-296"><a href="#cb6-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-297"><a href="#cb6-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python include="ssc.py" start-line=9 end-line=18}</span></span>
+<span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: Generate a simpler dataset</span></span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>Y <span class="op">=</span> np.concatenate((</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>    rng.rand(<span class="dv">2</span>, n<span class="op">//</span><span class="dv">2</span>) <span class="op">*</span> <span class="fl">0.01</span></span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.repeat(rng.rand(<span class="dv">1</span>, n<span class="op">//</span><span class="dv">2</span>), <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>),  <span class="co"># / Diagonal</span></span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>    rng.rand(<span class="dv">2</span>, n<span class="op">//</span><span class="dv">2</span>) <span class="op">*</span> <span class="fl">0.01</span></span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.repeat(rng.rand(<span class="dv">1</span>, n<span class="op">//</span><span class="dv">2</span>), <span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>)   <span class="co"># \ Diagonal</span></span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span> [[<span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>]] <span class="op">+</span> [[<span class="dv">0</span>], [<span class="dv">1</span>]]</span>
+<span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">-</span> [[<span class="fl">0.5</span>], [<span class="fl">0.5</span>]]</span>
+<span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-318"><a href="#cb6-318" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb6-319"><a href="#cb6-319" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: Solve and visualize a convex optimization problem</span></span>
+<span id="cb6-320"><a href="#cb6-320" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> cvxpy <span class="im">import</span> Variable, Minimize, norm, diag, Problem, ECOS</span>
+<span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable matrix</span></span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> Variable((n, n))</span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="co"># Minimize ||C||_1</span></span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a>objective <span class="op">=</span> Minimize(norm(C,<span class="dv">1</span>))</span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a><span class="co"># Subject to Y = YC, diag(C) = 0</span></span>
+<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a>constraints <span class="op">=</span> [Y <span class="op">==</span> Y <span class="op">@</span> C, diag(C) <span class="op">==</span> <span class="dv">0</span>]</span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> Problem(objective, constraints)</span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a>prob.solve(solver<span class="op">=</span>ECOS)</span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> C.value <span class="op">/</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(C.value), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>px.imshow(C)</span>
+<span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a><span class="in">```{.python include="ssc.py" start-line=27 dedent=4}</span></span>
+<span id="cb6-339"><a href="#cb6-339" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb6-340"><a href="#cb6-340" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
