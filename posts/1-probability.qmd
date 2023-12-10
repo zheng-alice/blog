@@ -11,6 +11,7 @@ filters:
 ---
 <!-- Describe the probability theory and random variables. -->
 
+
 ## Random variables
 
 Here's the definition; taken from [Wikipedia](https://en.wikipedia.org/wiki/Random_variable#Measure-theoretic_definition), which in order takes it from @fristedt_modern_1996 [page 11].

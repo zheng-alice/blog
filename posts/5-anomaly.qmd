@@ -1,9 +1,179 @@
 ---
 title: Anomaly/outlier detection
-subtitle: TODO
+subtitle: Changepoint detection
 description: TODO
 date: 2023/12/05
 categories:
   - TODO
 ---
 <!-- Detect anomaly/outlier behavior and the treatment techniques. -->
+
+
+## Outliers
+
+![Image credit: [Ajitesh Kumar](https://vitalflux.com/outlier-detection-techniques-in-python/)](https://i0.wp.com/vitalflux.com/wp-content/uploads/2023/05/Outlier-detection-Python-Machine-Learning.png){width=50%}
+
+```{python}
+#| code-summary: Run linear regression on uncorrelated data
+#| fig-cap: Uncorrelated data
+#| label: fig-base
+from pandas import DataFrame
+from numpy.random import normal, random, seed
+import plotly.express as px
+seed(5805)
+
+n = 100
+df = DataFrame({'x': normal(size=n-1) + random(n-1), 'y': normal(size=n-1)})
+fig = px.scatter(df, x='x', y='y', trendline='ols').show();
+```
+
+```{python}
+#| code-summary: Run linear regression on data with an outlier
+#| fig-cap: Regular OLS
+#| label: fig-outlier
+df.loc[n-1] = {'x': 10, 'y': 10, 'outlier': True}
+fig = px.scatter(df, x='x', y='y', trendline='ols')
+fig.update_traces(marker=dict(color=["#636efa"] * (n-1) + ["#EF553B"]))
+fig.show();
+```
+
+$$
+L_\delta(a) = \begin{cases}
+    \frac{1}{2} a^2 & \text{if } |a| \leq \delta\ ,\\
+    \delta(|a| - \frac{1}{2} \delta) & \text{otherwise}\ .
+\end{cases}
+$$ {#eq-huber}
+
+![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Huber_loss)](https://upload.wikimedia.org/wikipedia/commons/c/cc/Huber_loss.svg){width=50%}
+
+```{python}
+#| code-summary: Run linear regression with Huber loss
+#| fig-cap: OLS with Huber loss
+#| label: fig-huber
+from numpy import linspace
+import plotly.graph_objects as go
+from sklearn.linear_model import HuberRegressor
+
+fig = px.scatter(df, x='x', y='y')
+fig.update_traces(marker=dict(color=["#636efa"] * (n-1) + ["#EF553B"]))
+X = df['x'].values.reshape(-1, 1)
+x_range = linspace(X.min(), X.max(), 100).reshape(-1, 1)
+y = df['y']
+
+model = HuberRegressor(epsilon=1)
+model.fit(X, y)
+y_fit = model.predict(x_range)
+fig.add_traces(go.Scatter(x=x_range.squeeze(), y=y_fit,
+    showlegend=False, line=dict(color="#636efa"))).show();
+```
+
+
+## Changepoint detection
+
+```{python}
+#| code-summary: Load and display the Nile dataset
+#| fig-cap: Yearly volume of the Nile river at Aswan. A dam was built in 1898.
+#| label: fig-nile
+import statsmodels.api as sm
+import plotly.express as px
+
+# Time series data
+nile = sm.datasets.get_rdataset("Nile").data
+fig = px.line(nile, x="time", y="value")
+
+# Ground truth change point
+fig.add_vline(x=1899, line_width=2, line_dash="dash", line_color="black")
+```
+
+### CUSUM
+
+@page_continuous_1954
+
+MATLAB has a built-in [cusum](https://www.mathworks.com/help/signal/ref/cusum.html) function
+
+```{python}
+#| code-summary: A visual example of changepoint detection
+#| fig-cap: Cumulative outcomes of flipping a coin with changing probabilities.
+#| label: fig-coin
+from numpy import concatenate, cumsum, mean
+
+# Simulate coin flipping
+n, t = [75, 25], 50
+p0, p1 = 0.45, 0.75
+coin = concatenate((random((n[0], t)) < p0, random((n[1], t)) < p1))
+cumul = mean(cumsum(2*coin-1, axis=0), axis=1)
+
+# Display accumulated counts
+avg0 = (2*p0 - 1) * n[0]
+avg1 = (2*p1 - 1) * n[1] + avg0
+fig = px.scatter(y=cumul, labels={'x': 'Flip count', 'y': "Accumulated (Heads - Tails)"})
+fig.add_traces(go.Scatter(x=[n[0],n[0]+n[1]], y=[avg0, avg1],
+    mode="lines", name="Changed", line=dict(dash='dash')))
+fig.add_traces(go.Scatter(x=[0,n[0]], y=[0, avg0], mode="lines", name="Original"))
+```
+
+$Z_n = (X_n - \bar{x}) / s$
+
+$$
+H_n = \max(0, H_{n-1} + Z_n - \omega)\ ,
+$$ {#eq-cusum-h}
+$$
+L_n = \min(0, L_{n-1} + Z_n + \omega)\ ,
+$$ {#eq-cusum-l}
+where we set $H_0 = L_0 = 0$.
+
+```{python}
+#| code-summary: Implementation of the CUSUM algorithm
+#| fig-cap: CUSUM control chart.
+#| label: fig-cusum
+import numpy as np
+
+def cusum(X, lim=5, w=0, mean=None, std=None, plot=True):
+    '''Detect changes in mean using the CUSUM test.
+
+    ARGUMENTS:
+    lim: number of standard deviations in drift to be detected.
+    w: number of standard devitaions as damping coefficient.
+    mean: expected mean or None to compute from 25 leading samples.
+    std: expected standard deviation or None to compute from 25 leading samples.
+    plot: whether to display a visualization.
+
+    RETURNS:
+    index of the first detected change or None.
+    '''
+    # Estimate mean and standard deviation
+    if mean is None:
+        mean = np.mean(X[:25])
+    if std is None:
+        std = np.mean(X[:25])
+    Z = (X - mean) / std
+
+    n = len(Z)
+    H = np.zeros(n)
+    L = np.zeros(n)
+    for i, z in enumerate(Z):
+        H[i] = max(0, H[i-1] + z - w)
+        L[i] = min(0, L[i-1] + z + w)
+
+    idx_H = np.argmax(np.append(H, lim) >= lim)
+    idx_L = np.argmax(np.append(L, -lim) <= -lim)
+    idx = min(idx_H, idx_L)
+
+    if plot:
+        fig = go.Figure()
+        fig.add_traces(go.Scatter(y=H, name="Upper cumulative sum"))
+        fig.add_traces(go.Scatter(y=L, name="Lower cumulative sum"))
+        fig.add_hline(y=lim, line_dash='dash', line_color="#636efa")
+        fig.add_hline(y=-lim, line_dash='dash', line_color="#EF553B")
+        if idx < n:
+            HL = H if idx_H <= idx_L else L
+            fig.add_traces(go.Scatter(x=[idx], y=[HL[idx]],
+                mode="markers", marker_symbol='circle-open', name="Changepoint",
+                marker=dict(size=12, line_width=4, color='black')))
+        fig.show()
+
+    return idx if idx < n else None
+
+change = cusum(nile['value'], lim=2)
+print(f"Detected changepoint at year {nile['time'][change]}.")
+```

@@ -14,6 +14,7 @@ filters:
 #| code-fold: true
 #| code-summary: "Scatterplot matrix code by sklearn"
 #| fig-cap: A comparison of various clustering methods.
+#| column: page
 # Directly taken from:
 # https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html
 
@@ -293,6 +294,39 @@ plt.show()
 ```
 
 ```{.python include="ssc.py" start-line=9 end-line=18}
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: Generate a simpler dataset
+n = 20
+Y = np.concatenate((
+    rng.rand(2, n//2) * 0.01
+        + np.repeat(rng.rand(1, n//2), 2, axis=0),  # / Diagonal
+    rng.rand(2, n//2) * 0.01
+        + np.repeat(rng.rand(1, n//2), 2, axis=0)   # \ Diagonal
+        * [[1], [-1]] + [[0], [1]]
+), axis=1) - [[0.5], [0.5]]
+```
+
+```{python}
+#| code-summary: Solve and visualize a convex optimization problem
+from cvxpy import Variable, Minimize, norm, diag, Problem, ECOS
+import plotly.express as px
+
+# Variable matrix
+C = Variable((n, n))
+
+# Minimize ||C||_1
+objective = Minimize(norm(C,1))
+
+# Subject to Y = YC, diag(C) = 0
+constraints = [Y == Y @ C, diag(C) == 0]
+prob = Problem(objective, constraints)
+prob.solve(solver=ECOS)
+
+C = C.value / np.max(np.abs(C.value), axis=0)
+px.imshow(C)
 ```
 
 ```{.python include="ssc.py" start-line=27 dedent=4}

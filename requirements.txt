@@ -3,4 +3,9 @@ jupyter
 numpy
 matplotlib
 pandas
+plotly
 scikit-learn
+seaborn
+statsmodels
+torch
+torchvision

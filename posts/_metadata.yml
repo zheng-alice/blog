@@ -1,3 +1,7 @@
 format:
   html:
     code-tools: true
+
+comments:
+  utterances:
+    repo: adidenkova/blog-comments

@@ -1,9 +1,255 @@
 ---
 title: Classification
-subtitle: TODO
 description: TODO
 date: 2023/12/04
 categories:
   - TODO
 ---
-<!-- Analyze multiple linear and nonlinear regression. -->
+<!-- Describe the algorithms, theories, and applications related to machine learning/data mining for classification. -->
+
+
+![Image credit: [sklearn](https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html)](https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png){column=page}
+
+## Simple dataset
+
+### Iris
+
+![Image credit: [Sebastian Raschka](https://sebastianraschka.com/Articles/2015_pca_in_3_steps.html)](https://sebastianraschka.com/images/blog/2015/principal_component_analysis_files/iris.png){width=75%}
+
+![Image credit: [Gaurav Chauhan](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)](https://machinelearninghd.com/wp-content/uploads/2021/03/iris-dataset.png)
+
+```{python}
+#| code-fold: true
+#| code-summary: 2D scatterplot of iris
+import plotly.express as px
+from sklearn.preprocessing import MinMaxScaler
+
+iris = px.data.iris().drop('species_id', axis=1)
+fig = px.scatter(iris, x="sepal_width", y="sepal_length", size="petal_length",
+    color="species", marginal_y="violin", marginal_x="violin",
+    template="simple_white", hover_data=['petal_width'])
+op = MinMaxScaler(feature_range=(0.5, 1.0)).fit_transform(
+    iris['petal_width'].values[:, None])
+fig.update_traces(marker=dict(opacity=op), selector=dict(mode='markers'))
+fig.show();
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: 3D scatterplot of iris
+import plotly.express as px
+
+fig = px.scatter_3d(iris, x="sepal_width", y="sepal_length", z="petal_width",
+    size="petal_length", color="species", template="simple_white")
+fig.show();
+```
+
+
+### Naive Bayes
+
+```{python}
+#| code-summary: Naive bayes classifier
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, precision_score
+
+# Fit and predict
+X, y = iris.drop('species', axis=1), iris['species']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.5, random_state=5805)
+nb = GaussianNB().fit(X_train, y_train)
+iris['predict'] = nb.predict(X)
+y_pred = nb.predict(X_test)
+print(f"Accuracy:  {accuracy_score(y_test, y_pred):.4f}\n"
+      f"Precision: {precision_score(y_test, y_pred, average='macro'):.4f}")
+```
+
+### Performance
+
+```{python}
+#| code-fold: true
+#| code-summary: Code for plotting confusion matrix
+#| fig-align: center
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+
+names = iris['species'].unique()
+conf = confusion_matrix(y_test, y_pred)
+df_cm = pd.DataFrame(conf, index=names, columns=names)
+plt.figure(figsize = (4,3))
+sn.heatmap(df_cm, annot=True, fmt='d');
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: 2D scatterplot of iris & predictions
+import numpy as np
+
+fix = {"circle": "#1F77B4", "diamond": "#FF7F0E", "square": "#2CA02C"}
+fig = px.scatter(iris, x="sepal_width", y="sepal_length", size="petal_length",
+    color="species", symbol="predict",
+    template="simple_white", hover_data=['petal_width'])
+fig.update_traces(marker=dict(opacity=op), selector=dict(mode='markers'))
+for symbol, color in fix.items():
+    fig.update_traces(marker=dict(line=dict(width=3, color=color),
+                      symbol="circle"),
+                      selector=dict(mode='markers', marker_symbol=symbol))
+fig.show();
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: 3D scatterplot of iris & predictions
+import plotly.express as px
+
+fig = px.scatter_3d(iris, x="sepal_width", y="sepal_length", z="petal_width",
+    size="petal_length", color="species", symbol="predict",
+    template="simple_white")
+for symbol, color in fix.items():
+    fig.update_traces(marker=dict(line=dict(color=color)),
+                      selector=dict(mode='markers', marker_symbol=symbol))
+fig.show();
+```
+
+
+## Complex dataset
+
+### MNIST
+
+![Image credit: [Orhan G. Yalçın](https://towardsdatascience.com/image-classification-in-10-minutes-with-mnist-dataset-54c35b77a38d)](https://miro.medium.com/v2/resize:fit:720/format:webp/1*XdCMCaHPt-pqtEibUfAnNw.png)
+
+### Neural network
+
+[pytorch tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+
+```{python}
+#| code-fold: true
+#| code-summary: Import pytorch
+import torch
+from torch import nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader
+from torchvision.datasets import MNIST
+import torchvision.transforms as transforms
+import torch.optim as optim
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using device: {device}")
+```
+
+```{python}
+#| code-summary: Load and preprocess data
+#| echo: false
+transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize((0.5), (0.5))
+    ])
+batch_size = 4
+
+trainset = MNIST(root='./data', train=True, download=True, transform=transform)
+trainloader = DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=2)
+
+testset = MNIST(root='./data', train=False, download=True, transform=transform)
+testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=2)
+
+names = list(range(10))
+```
+
+```{python}
+#| code-summary: Create a neural network
+class NeuralNet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 3, 5)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(3, 6, 5)
+        self.fc1 = nn.Linear(6 * 4 * 4, 10)
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = torch.flatten(x, 1)
+        x = self.fc1(x)
+        return x
+
+model = NeuralNet()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+```
+
+```{python}
+#| code-summary: Train a neural network
+# Do one pass over the dataset
+for i, data in enumerate(trainloader, 0):
+    inputs, labels = data
+
+    # Resent the gradients
+    optimizer.zero_grad()
+
+    # Forward/backward pass
+    outputs = model(inputs)
+    loss = criterion(outputs, labels)
+    loss.backward()
+    optimizer.step()
+
+# Evaluate network
+y_test, y_pred = [], []
+with torch.no_grad():
+    for data in testloader:
+        inputs, labels = data
+        outputs = model(inputs)
+        _, pred = torch.max(outputs.data, 1)
+        y_test.extend(labels)
+        y_pred.extend(pred)
+print(f"Accuracy:  {accuracy_score(y_test, y_pred):.4f}\n"
+      f"Precision: {precision_score(y_test, y_pred, average='macro'):.4f}")
+```
+
+### Performance
+
+```{python}
+#| code-fold: true
+#| code-summary: Code for plotting confusion matrix
+#| fig-align: center
+conf = confusion_matrix(y_test, y_pred)
+df_cm = pd.DataFrame(conf, index=names, columns=names)
+plt.figure(figsize = (8.5,7))
+sn.heatmap(df_cm, annot=True, fmt='d');
+```
+
+```{python}
+#| code-fold: true
+#| code-summary: Show test samples with mistakes
+#| layout-ncol: 4
+import torchvision
+import numpy as np
+
+def imshow(img):
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    plt.show()
+
+
+# Get samples where mistakes were made
+def wrong(dataloader):
+    for i, (images, labels) in enumerate(testloader):
+        for j, (image, label) in enumerate(zip(images, labels)):
+            label, pred = label.item(), y_pred[batch_size*i+j].item()
+            if pred != label:
+                yield (image, label, pred)
+
+
+# Plot several examples
+loader = wrong(testloader)
+for _ in range(4):
+    image, label, pred = next(loader)
+    img = np.transpose(image, (1, 2, 0))
+    plt.imshow(img, cmap='Greys')
+    plt.title(f"Actual: {label}\nPredicted: {pred}", size=42)
+    plt.xticks([],[])
+    plt.yticks([],[])
+    plt.show()
+```
