@@ -262,7 +262,7 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="hoeffdings-inequality">Hoeffding’s inequality</h3>
 <p>This famous inequality provides one such bound.</p>
 <div id="thm-hoeffding" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1 </strong></span><strong>(Hoeffding’s inequality).</strong> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be independent random variables where with probability <span class="math inline">\(1\)</span>, <span class="math inline">\(X_i \in [a_i, b_i]\)</span> (i.e., bounded). Let <span class="math inline">\(R_i \coloneqq b_i - a_i\)</span> be the range. Then, for all <span class="math inline">\(\epsilon \geq 0\)</span>, <span id="eq-hoeffding"><span class="math display">\[
+<p><span class="theorem-title"><strong>Theorem 1 </strong></span><strong>(Hoeffding’s inequality).</strong> Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be independent random variables where with probability <span class="math inline">\(1\)</span>, <span class="math inline">\(X_i \in [a_i, b_i]\)</span> (i.e., bounded). Let <span class="math inline">\(R_i \coloneqq b_i - a_i\)</span> be the range. Then for all <span class="math inline">\(\epsilon \geq 0\)</span>, <span id="eq-hoeffding"><span class="math display">\[
 P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \epsilon \right) \geq 2 \exp \left( -\frac{2 \epsilon^2}{\sum_{i=1}^n R_i^2} \right)\ .
 \tag{4}\]</span></span></p>
 </div>
@@ -288,10 +288,10 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <figcaption class="figure-caption">Image credit: <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit">Wikipedia</a></figcaption>
 </figure>
 </div>
-<p>The image above shows a row of slot machines. They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spun the wheel (although in the ones seen above it seems to have been replaced by buttons).</p>
+<p>The image above shows a row of slot machines. They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spin the wheel (although in the ones seen above it seems to have been replaced by buttons).</p>
 <p>Generalizing a bit, let’s imagine that we instead have <span class="math inline">\(K\)</span> such arms. Maybe they belong to the same, now much more tricky bandit. Or, maybe they model the possibility of playing different games in the same casino. In any case, at every time point <span class="math inline">\(t\)</span> we must choose one such action <span class="math inline">\(a_t \in [K]\)</span> to play, only learning information about its underlying distribution through the rewards we receive.</p>
 <p>There are various possible types of the bandit setting, but here we will only consider <strong>stochastic</strong> (as opposed to adversarial) losses and <strong>multi-armed</strong> (as opposed to linear or gaussian process) bandits.</p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-indent-size="1.8em" data-comment-delimiter="//" data-no-end="false" data-alg-title="Algorithm" data-line-number="true" data-pseudocode-index="1">
+<div id="alg-explore-exploit" class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="1" data-comment-delimiter="//" data-indent-size="1.8em" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Stochastic MAB (Framework)} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Choose an action $a_t \in [K]$. \State Suffer loss $z_t[a_t]$ and also only observe $z_t[a_t]$. \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -306,7 +306,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <h3 class="anchored" data-anchor-id="explore-then-exploit">Explore-then-exploit</h3>
 <p>A central issue in the multi-armed bandit problem is that of <strong>exploration versus exploitation</strong> - whether to prioritize investigating the yet unknown, or to take advantage of information already learned. It is not a coincidence this problem appears both here and in <strong>reinforcement learning</strong> - both fall within the realm of <strong>online learning</strong> (when decisions and information are processed sequentially), the only thing separating them is the addition of states.</p>
 <p>We start with a simple algorithm that does the two stages separately <span class="citation" data-cites="ji_online_2022">(<a href="#ref-ji_online_2022" role="doc-biblioref">Ji 2022</a>, Lecture 14)</span>.</p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-indent-size="1.8em" data-comment-delimiter="//" data-no-end="false" data-alg-title="Algorithm" data-line-number="true" data-pseudocode-index="2">
+<div id="alg-explore-exploit" class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="2" data-comment-delimiter="//" data-indent-size="1.8em" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Explore-then-exploit} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Explore phase: try each arm $N$ times. \State Exploit phase: determine $\tilde{a}$ with the highest average reward; then play $\tilde{a}$ in all remaining rounds. \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -361,7 +361,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <section id="epsilon-greedy" class="level3">
 <h3 class="anchored" data-anchor-id="epsilon-greedy">Epsilon-greedy</h3>
 <p>Instead of doing exploration all at once, we may spread it out over all rounds, making it less frequent over time <span class="citation" data-cites="ji_online_2022">(<a href="#ref-ji_online_2022" role="doc-biblioref">Ji 2022</a>, Lecture 14)</span>. You’ll see this strategy used quite frequently in reinforcement learning, as it is pretty simple to implement.</p>
-<div id="alg-epsilon-greedy" class="pseudocode-container" data-indent-size="1.8em" data-comment-delimiter="//" data-no-end="false" data-alg-title="Algorithm" data-line-number="true" data-pseudocode-index="3">
+<div id="alg-epsilon-greedy" class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="3" data-comment-delimiter="//" data-indent-size="1.8em" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Epsilon-greedy} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Toss a coin with success rate $\epsilon_t$. \If{success} \State Explore: choose an arm uniformly at random. \Else \State Exploit: choose an arm with the highest average reward so far. \EndIf \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -421,7 +421,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
     \mathrm{LCB}_t(a) &amp;= \hat{\mu}_t(a) - \beta_t(a)\ .
 \end{align}
 \tag{12}\]</span></span></p>
-<div id="alg-elimination" class="pseudocode-container" data-indent-size="1.8em" data-comment-delimiter="//" data-no-end="false" data-alg-title="Algorithm" data-line-number="true" data-pseudocode-index="4">
+<div id="alg-elimination" class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="4" data-comment-delimiter="//" data-indent-size="1.8em" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Successive Elimination} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \State Initialize active arm set $\mathcal{A}_1 = [K]$. \For{$p = 1, 2, \ldots$} \State Play each arm in $\mathcal{A}_p$ once. \State Let $t$ be the time at the end of the current phase $p$. \State $\mathcal{A}_{p+1} = \{ a \in \mathcal{A}_p : \mathrm{UCB}_t (a) \geq \max_{a' \in \mathcal{A}_p} \mathrm{LCB}_t (a) \}$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -490,7 +490,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <section id="ucb" class="level3">
 <h3 class="anchored" data-anchor-id="ucb">UCB</h3>
 <p>Since the event of eliminating an arm may be quite rare, we may instead just sample the arm with the highest <span class="math inline">\(\mathrm{UCB}_t(a)\)</span>. This strategy demonstrates a principle known as <em>optimism in the face of uncertainty</em> <span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 15)</span> - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.</p>
-<div id="alg-ucb" class="pseudocode-container" data-indent-size="1.8em" data-comment-delimiter="//" data-no-end="false" data-alg-title="Algorithm" data-line-number="true" data-pseudocode-index="5">
+<div id="alg-ucb" class="pseudocode-container" data-alg-title="Algorithm" data-pseudocode-index="5" data-comment-delimiter="//" data-indent-size="1.8em" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{UCB} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State $a_t = \arg\max_{a \in [K]} \mathrm{UCB}_t (a)$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -1202,7 +1202,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>**(Hoeffding's inequality).**</span>
 <span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>Let $X_1, \ldots, X_n$ be independent random variables where with probability $1$, $X_i \in <span class="co">[</span><span class="ot">a_i, b_i</span><span class="co">]</span>$ (i.e., bounded).</span>
 <span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>Let $R_i \coloneqq b_i - a_i$ be the range.</span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>Then, for all $\epsilon \geq 0$,</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>Then for all $\epsilon \geq 0$,</span>
 <span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>$$</span>
 <span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}<span class="co">[</span><span class="ot">X_i</span><span class="co">]</span>) \Biggr \rvert \leq \epsilon \right) \geq 2 \exp \left( -\frac{2 \epsilon^2}{\sum_{i=1}^n R_i^2} \right)\ .</span>
 <span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>$$ {#eq-hoeffding}</span>
@@ -1235,7 +1235,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Multi-armed_bandit)</span><span class="co">](https://upload.wikimedia.org/wikipedia/commons/8/82/Las_Vegas_slot_machines.jpg)</span>{width=50%}</span>
 <span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>The image above shows a row of slot machines.</span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spun the wheel (although in the ones seen above it seems to have been replaced by buttons).</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spin the wheel (although in the ones seen above it seems to have been replaced by buttons).</span>
 <span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>Generalizing a bit, let's imagine that we instead have $K$ such arms.</span>
 <span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>Maybe they belong to the same, now much more tricky bandit.</span>
