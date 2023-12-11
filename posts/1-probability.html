@@ -248,7 +248,7 @@ div.csl-indent {
 <section id="multi-armed-bandits" class="level2">
 <h2 class="anchored" data-anchor-id="multi-armed-bandits">Multi-armed bandits</h2>
 <p>Based on <span class="citation" data-cites="slivkins_introduction_2022">Slivkins (<a href="#ref-slivkins_introduction_2022" role="doc-biblioref">2022</a>)</span></p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.8em" data-comment-delimiter="//" data-pseudocode-index="1" data-no-end="false" data-line-number="true">
+<div id="alg-explore-exploit" class="pseudocode-container" data-pseudocode-index="1" data-indent-size="1.8em" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Stochastic MAB (Framework)} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Choose an action $a_t \in [K]$. \State Suffer loss $z_t[a_t]$ and also only observe $z_t[a_t]$. \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -257,7 +257,7 @@ div.csl-indent {
 <section id="explore-then-exploit" class="level3">
 <h3 class="anchored" data-anchor-id="explore-then-exploit">Explore-then-exploit</h3>
 <p><span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 14)</span></p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.8em" data-comment-delimiter="//" data-pseudocode-index="2" data-no-end="false" data-line-number="true">
+<div id="alg-explore-exploit" class="pseudocode-container" data-pseudocode-index="2" data-indent-size="1.8em" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Explore-then-exploit} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Explore phase: try each arm $N$ times. \State Exploit phase: determine $\tilde{a}$ with the highest average reward; then play $\tilde{a}$ in all remaining rounds. \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -301,7 +301,7 @@ div.csl-indent {
 <section id="epsilon-greedy" class="level3">
 <h3 class="anchored" data-anchor-id="epsilon-greedy">Epsilon-greedy</h3>
 <p><span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 14)</span></p>
-<div id="alg-epsilon-greedy" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.8em" data-comment-delimiter="//" data-pseudocode-index="3" data-no-end="false" data-line-number="true">
+<div id="alg-epsilon-greedy" class="pseudocode-container" data-pseudocode-index="3" data-indent-size="1.8em" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Epsilon-greedy} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Toss a coin with success rate $\epsilon_t$. \If{success} \State Explore: choose an arm uniformly at random. \Else \State Exploit: choose an arm with the highest average reward so far. \EndIf \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -351,7 +351,7 @@ div.csl-indent {
 <section id="successive-elimination" class="level3">
 <h3 class="anchored" data-anchor-id="successive-elimination">Successive elimination</h3>
 <p><span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 14)</span></p>
-<div id="alg-elimination" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.8em" data-comment-delimiter="//" data-pseudocode-index="4" data-no-end="false" data-line-number="true">
+<div id="alg-elimination" class="pseudocode-container" data-pseudocode-index="4" data-indent-size="1.8em" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Successive Elimination} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \State Initialize active arm set $\mathcal{A}_1 = [K]$. \For{$p = 1, 2, \ldots$} \State Play each arm in $\mathcal{A}_p$ once. \State Let $t$ be the time at the end of the current phase $p$. \State $\mathcal{A}_{p+1} = \{ a \in \mathcal{A}_p : \mathrm{UCB}_t (a) \geq \max_{a' \in \mathcal{A}_p} \mathrm{LCB}_t (a) \}$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -410,7 +410,7 @@ div.csl-indent {
 <section id="ucb" class="level3">
 <h3 class="anchored" data-anchor-id="ucb">UCB</h3>
 <p><span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 15)</span></p>
-<div id="alg-ucb" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.8em" data-comment-delimiter="//" data-pseudocode-index="5" data-no-end="false" data-line-number="true">
+<div id="alg-ucb" class="pseudocode-container" data-pseudocode-index="5" data-indent-size="1.8em" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number="true" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{UCB} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State $a_t = \arg\max_{a \in [K]} \mathrm{UCB}_t (a)$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
