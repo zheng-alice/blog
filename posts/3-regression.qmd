@@ -1,16 +1,30 @@
 ---
 title: Linear and nonlinear regression
-description: TODO
+description: In which we analyze various methods for linear and nonlinear regression. Includes several appearances from nonparametric regression.
 date: 2023/12/03
 categories:
-  - TODO
+  - Regression
+  - Supervised learning
+  - Least squares
 ---
 <!-- Analyze multiple linear and nonlinear regression. -->
 
 
 ## Regression
 
-`glm(y ~ x, ...)` or `glm(y ~ ., ...)`
+Much like [classification](4-classification.qmd), it is a problem in **supervised learning**.
+Unlike [classification](4-classification.qmd), it predicts a continuous variable rather than a categorical one.
+This makes it applicable to a variety of problems where we need to model an unknown (dependent) variable based on one or many known (independent) ones.
+Some examples include:
+
+* Predicting the rating based off of a text of an online review.
+* Computing how much a self-driving car should accelerate/deccelerate/turn (based on prior human data).
+* Hypothesis testing for whether one variable correlates with another in an experiment.
+
+We create a (simplified, artificial) dataset along the lines of the last example.
+We make two cases: one with a linear trend and another exponential.
+
+*Note:* if you're viewing this on mobile, you may need to turn your phone sideways to see the plots.
 
 ```{python}
 #| code-fold: true
@@ -41,15 +55,146 @@ px.scatter(lin_df, x='x', y='y').show()
 px.scatter(exp_df, x='x', y='y').show();
 ```
 
+While there is no ambiguity about the presence of a trend, we will still evaluate various methods on their ability to accurately fit it.
+
 ## Linear regression
 
-![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Linear_least_squares#Example)](https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg)
+So, what is it?
+As the name suggests, it's when you regress with a line.
+A linear line.
+A line that is linear (i.e., straight and not nonlinear).
+
+Let's go with that definition for now.
+We'll elaborate more on it later.
+
+But, there are many possible ways to draw a (linear) line.
+How do we know which one is the best?
+Introducing...
+
+### Least squares
+
+Despite your best efforts to draw a straight line that passes though all points, you'll likely find that noisy data is rather adamant on making this impossible.
+In particular, the line only gives you two degrees of freedom to play with (slope and intercept), while each data point subtracts one.
+So, for sets of three or more points, unless they are perfectly collinear, you'll have to resort to a line that passes close (but not exactly through) most of the points.
+Such systems are also known as *overdetermined*.
+The result may look something like this:
+
+![Visualization of residuals in linear regression. Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Linear_least_squares#Example)](https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg){#fig-residuals}
+
+The vertical [green]{.green} lines indicate *residuals* - the things you would want to avoid to get a good fit.
+Specifically, we wish to minimize the sum of some function of the residuals; common choices include the $\ell_1$ and $\ell_2$ norms.
+
+Here are a couple of physics-like interpretations that I like to think about when it comes to @fig-residuals:
+
+* The points being [holes]{.red} in the wall, through which [strings]{.green} are strung which connect to a [stick]{.blue} on the front side and to a weight on the other.
+  This is analogous to $\ell_1$ norm as the exerted force isn't dependent on line's distance away from the hole.
+  The weights can be directly adjusted to model weighted data.
+* The points being [pins]{.red} fixed to the wall, which are connected via [springs]{.green} to a [stick]{.blue}.
+  The springs' resting point is whey they are fully compressed, so they pull the stick closer to the pins with more force the further it is, resembling $\ell_2$ norm.
+  To model weighted data, the spring coefficients may be adjusted proportionally.
+
+Except that the strings/springs can only be oriented vertically, and they are free to slide along the line, and everything except the weights is weightless, and...
+Yeah, the analogy breaks down pretty fast.
+But its basic point stands: the points want the line to be close, so each pulls the line towards itself.
+As there isn't a way to satisfy all points, the line ends up being "between" them, oriented in the same direction as their trend.
+
+### Derivation
+
+But how do we actually find this optimal line?
+First, we should define our model more properly.
+Let's suppose (for now) that we just want to regress a variable[^rv] $Y$ in terms of one other variable $X_1$.
+Our model would have two coefficients; $\beta_1$ for the effect of $X_1$ and $\beta_0$ for the intercept.
+Denoting the data sampled from the variables by $\{x_{i,1}, y_i\}_{i=1}^n$, we would then approximate[^sim] $y_i \sim \beta_0 + \beta_1 x_{i,1}$.
+
+[^rv]: As hinted by this notation, $X$, $y$ and later $\epsilon$ can be thought of either as a [random vector/variables](1-probability.qmd) or matrix/vector samples of these.
+Here, we will stick to the latter as it directly corresponds to the provided data and makes things somewhat simpler.
+
+[^sim]: This $\sim$ notation isn't entirely precise, but can be interpreted roughly as $\approx$.
+It's meant to imitate `R`'s formula notation like `glm(y ~ x, ...)` or `glm(y ~ ., ...)`.
+
+Suppose instead that we have $d$ variables $X_1, X_2, \ldots, X_d$.
+Accordingly, the updated formula would be
+$$
+y_i \sim \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \ldots + \beta_d x_{i,d}
+= \sum_{j=0}^d x_{i,j} \beta_j\ ,
+$$ {#eq-multi}
+
+when we set $x_{i,0} = 1$.
+Collecting $y_i$ into an $n$-dimensional column vector $y$, $\beta_j$ into a $(d+1)$-dimensional column vector $\beta$, and $x_{i,j}$ into an $n$-by-$(d+1)$ matrix, this lets us write @eq-multi as $y \sim X \beta$.
+To make it an equality, we add an error term like
+$$
+y = X \beta + \epsilon\ ,
+$$ {#eq-prob}
+
+where the added $\epsilon$ is a vector of the same residuals featured in @fig-residuals.
+Our goal becomes to solve @eq-prob for the optimal $\hat{\beta}$ that minimizes the $2$-norm $||\epsilon||$.
+
+Sure, but how do we actually do that?
+Turns out, we can *just* prepend $X^\top$ to both sides and get rid of the $\epsilon$.
+Specifically, we obtain $X^\top y = X^\top X \hat{\beta}$, commonly known as the system of *normal equations*.
+This provides a closed-form solution[^inv]
+
+[^inv]: A tip from numerical analysis: don't compute $(X^\top X)^{-1}$ directly as that is rather slow and imprecise.
+Instead, solve $Ax = b$ with $A = X^\top X$ and $b = X^\top y$.
 
 $$
 \hat{\beta} = (X^\top X)^{-1} X^\top y = X^\dagger y\ ,
 $$ {#eq-ols}
 
-where $X^\dagger$ denotes the left pseudoinverse of $X$.
+where $X^\dagger$ denotes the left pseudoinverse of $X$, a generalization of the matrix inverse partially dedicated to least squares.
+As a side note, solving @eq-ols in `MATLAB` is as simple as `X\y`.
+
+Ok, but *why* does this work?
+One relevant observation is that prepending $X^\top$ reduces the system from $n$ equations to $d+1$, exactly matching the number of parameters in $\beta$ and thus making the problem no longer overconstrained.
+To see the reason in full detail though, let's return back to the original optimization problem
+$$
+\begin{align}
+    \text{minimize} \quad& || \epsilon ||\ ,\\
+    \text{such that} \quad& y = X \beta + \epsilon\ .
+\end{align}
+$$ {#eq-opt}
+
+This is a [convex optimization](https://en.wikipedia.org/wiki/Convex_optimization) problem, more specifically an instance of *quadratic programming*.
+However, we will not solve it as such, as we've just seen that it has a closed-form solution.
+First, note that $\epsilon$ is redundant - let's remove to to simplify the problem to $\hat{\beta} = \arg\min_\beta || y - X \beta ||$.
+What now?
+Let's take the partial of the objective value with respect to $\beta$ (for a reason I will explain later) using [matrix calculus](https://en.wikipedia.org/wiki/Matrix_calculus) - a tool that every machine learning theorist should have a run-in with at one point, methinks.
+Before we start though, we should square the objective - as this makes our lives easier without altering the optimal solution $\hat{\beta}$.
+Alright, here we go![^num]
+
+[^num]: Using the numerator layout.
+
+$$
+\begin{align}
+    \frac{\partial}{\partial \beta} || y - X \beta ||^2
+    &= \frac{\partial}{\partial \beta} ( y - X \beta )^\top ( y - X \beta ) \\
+    &= 2 ( y - X \beta )^\top \frac{\partial}{\partial \beta} ( y - X \beta ) \\
+    &= - 2 ( y - X \beta )^\top X
+\end{align}
+$$ {#eq-calculus}
+
+Oh, that was actually easier than I thought.
+All that's left is a bit of elementary calculus.
+The whole reason we computed the partial is so we can set it to zero and obtain the problem's critical points.
+Since this is a convex optimization problem, we know that any critical point we get is guaranteed to be an optimal solution.
+This gives us $X^\top (y - X \hat{\beta}) = 0$, which easily translates to the familiar normal equations $X^\top X \hat{\beta} = X^\top y$ and then @eq-ols, as needed.
+
+The constraint obtained just now has a pretty interesting geometric interpretation.
+Specifically, it implies that $y - X \hat{\beta}$ is orthogonal not only to the column space of $X$, but also $X v$ for any $v$.
+As such, $y - X \hat{\beta}$ is orthogonal to the linear subspace spanned by $X$, and thus the shortest of any possible $y - X \beta$.
+In short, $X \hat{\beta}$ is the **orthogonal projection** of $y$ onto the column space of $X$.
+
+A few additional remarks: least squares is an interesting case where the default estimator is equivalent to the [MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) one.
+Lastly, @eq-ols may still be ill-conditioned if one of the variables in $X$ is a scalar multiple of another, i.e., there is perfect *multicollinearity*.
+In practice this shouldn't break the solver unless features are somehow duplicated, yet it may still make $\hat{\beta}$ unstable in cases of high correlation.
+In such cases, it is best to avoid inferring effects from the coefficients of $\hat{\beta}$.
+
+### Examples
+
+Alright, let's actually use this thing!
+Let's take our fake data and try to fit some lines on it.
+Luckily, linear least squares is common enough for it to be ubiquitously implemented.
+The only case that we need special case for is introducing polynomial coefficients.
 
 ```{python}
 #| code-fold: true
@@ -88,10 +233,13 @@ def show(fig):
         ).show()
 ```
 
+The rest are so common, you can get them by just passing one additional parameter `trendline='ols'` to a plotting function.
+Below, we use the ordinary least squares (OLS) regressor that we defined above with regular coefficients, polynomial coefficients, and a $\log$-transform of the dependent variable.
+
 ```{python}
 #| code-summary: Fit trendlines via ordinary least squares
 #| label: fig-ols
-#| fig-cap: Trendlines via ordinary least squares
+#| fig-cap: Trendlines via ordinary least squares.
 #| fig-subcap:
 #|   - Ordinary least squares
 #|   - OLS of y ~ x^2 + x
@@ -105,6 +253,49 @@ show(px.scatter(exp_df, x='x', y='y', trendline='ols',
     trendline_options=dict(log_y=True),
     trendline_color_override='black'))
 ```
+
+Wait, where are the lines?
+The linear lines?
+Turns out our brief description of [linear regression](#linear-regression) comes with a huge caveat: such regression is *linear* beause of the lineariarity of its *underlying models*, not necessarily because it fits straight lines.
+As we have used variables ($x^2$, $\log(y)$) nonlinear with respect to the original data, the trendlines on the untransformed axes can inherit this nonlinearity.
+The latter $\log$-transform is actually a fundamental concept in **generalized linear models** (GLMs), a type of linear regression models using a *link function* to map their linear model to nonlinear dependent variables.
+Despite this, GLMs are still considered to be *linear* - after all, they aren't generalized *nonlinear* models (which are actually their own thing).
+
+And now, a word on the performance.
+The $y \sim x$ fit performs exactly as expected, nothing spectacular there.
+We won't try it on the exponential data as its fit will be obviously bad.
+On the latter, the $y \sim x^2 + x$ fit performs reasonably well, though you may note it's a bit flatter on the ends and wouldn't generalize well outside the domain.
+Additionally, it's evident that the exponential dataset suffers from **heteroscedasticity** - a phenomenon where points "fan out" more for larger values.
+Though this can't be easily seen above, it poses a problem for the polynomial fit, causing it to prioritize fitting the larger values more accurately at the cost of ignoring the lower values.
+For such data, we typically care about the *relative residuals*, which are perfectly captured by the $\log$-transform.
+Afterall, the transformed data will be exactly the linear data, for which an OLS fit prioritizes all residuals equally and thus works extremely well.
+
+
+## Nonlinear regression
+
+So, if we can fit all kinds of nonlinear-looking lines with [linear regression](#linear-regression), what then is *nonlinear* regression?
+Turns out, it covers a far more general predictors, ones that can be fit using virtually any parametrized function $f$.
+In particular, we fit $y \sim f(x, \beta)$ where $\beta$ and the parameters we need to find to fit the function.
+
+Note that this problem has virtually no structure - as such, the objective landscape may have many local minima or other unexpected properties that make convergence tough.
+Even if the optimal solution is found, it isn't guaranteed to be an unbiased estimator.
+As the function $f$ is provided as a *black box*, we do not have access to its derivative and thus cannot use gradient descent.
+Instead, common methods typically resort to some other sort of iterative optimization, or otherwise approximate the Jacobian using linear methods.
+
+### Examples
+
+We use the `curve_fit` function from `scipy`, which by default uses the [Levenberg-Marquardt](https://en.wikipedia.org/wiki/Levenberg%E2%80%93Marquardt_algorithm) (LM) algorithm.
+I won't go into the details of this algorithm, except to point that its (undampened) iteration step looks like $(J^\top J) \delta = J^\top (y - f(\beta))$.
+Now, isn't *that* familiar?
+
+The function that we will try to fit is
+$$
+f(x, \beta) \coloneqq \frac{\beta_0 x}{\beta_1 + x} + \beta_2\ ,
+$$ {#eq-f}
+
+which can be thought of as a parametrized version of $1/x$.
+One troublesome point about LM is that it only converges to the nearest local minimum; as such, we must supply an already pretty accurate guess to get anywhere useful.
+The guess below specifically comes from manually messing around with the parameters in a graphing calculator.
 
 ```{python}
 #| code-fold: true
@@ -122,7 +313,7 @@ def knn(X, x_range, y, k=20, weights='uniform'):
 ```{python}
 #| code-summary: Fit trendlines via miscellaneous methods
 #| label: fig-other
-#| fig-cap: Trendlines via other regression methods
+#| fig-cap: Trendlines via other regression methods.
 #| fig-subcap:
 #|   - Nonlinear least squares
 #|   - KNN Regression
@@ -144,11 +335,27 @@ show(px.scatter(exp_df, x='x', y='y', trendline='lowess',
    trendline_color_override='black'))
 ```
 
+The nonlinear fit, seen on the left, is fairly good - probably on par with the polynomial fit.
+While all the trouble we have gone through to get this okay fit may not seem worth it, it's extremely useful in cases where the function $f$ is complex but known ahead of time - such as in [mathematical modeling](https://en.wikipedia.org/wiki/Mathematical_model).
+I have taken a class on just that, and we have used nonlinear curve fitting tools like this all the time.
+One particulary memorable example involved deriving the dynamics of an outbreak of an infectious disease with an SEIRS model and then using nonlinear regression to fit its parameters.
+
+You'll notice that I threw in a couple of bonus fits there; both are examples of a different kind of regression,
+
+### Nonparametric regression
+
+Whereas the models up to this point all optimized for some parameters $\beta$ (and thus live within *parametric* regression), the two fits just shown have no such parameters.
+Instead, their fit is entirely dependent on the surrounding data.
+For instance, both KNN regression and LOWESS use some sort of weighted average of the surrounding points either directly or to fit a local polynomial spline.
+
+I will depart with just one last example - a visual reminder that all these methods can do multivariate regression (as mentioned in the [derivation](#derivation) of linear least squares).
+This method Support Vector Regression (SVR), that, if [`MATLAB`](https://www.mathworks.com/help/stats/understanding-support-vector-machine-regression.html) is to be believed, is considered a nonparametric method.
+
 ```{python}
 #| code-fold: true
 #| code-summary: Fit a multiratiate regression model
 #| label: fig-multi
-#| fig-cap: Support Vector Regression on the Iris dataset
+#| fig-cap: Support Vector Regression on the Iris dataset.
 #| warning: false
 # Taken from https://plotly.com/python/ml-regression/
 import numpy as np
@@ -185,3 +392,9 @@ fig.update_traces(marker=dict(size=5))
 fig.add_traces(go.Surface(x=xrange, y=yrange, z=pred, name='pred_surface', opacity=0.75))
 fig.show()
 ```
+
+Whoa, $\uparrow$ cool plot!
+Drag your mouse/finger on it to rotate.
+
+You may recognize the above points as the Iris dataset, minus its labels.
+While it's generally better-suited for [classification](4-classification.qmd), fits such as the one seen above could be useful for predicting a variable or filling in missing data in cases where labels aren't available.

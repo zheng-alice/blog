@@ -94,7 +94,7 @@ This famous inequality provides one such bound.
 **(Hoeffding's inequality).**
 Let $X_1, \ldots, X_n$ be independent random variables where with probability $1$, $X_i \in [a_i, b_i]$ (i.e., bounded).
 Let $R_i \coloneqq b_i - a_i$ be the range.
-Then, for all $\epsilon \geq 0$,
+Then for all $\epsilon \geq 0$,
 $$
 P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \epsilon \right) \geq 2 \exp \left( -\frac{2 \epsilon^2}{\sum_{i=1}^n R_i^2} \right)\ .
 $$ {#eq-hoeffding}
@@ -127,7 +127,7 @@ I first encountered these through a graduate course I took with Dr. Bo @ji_onlin
 ![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Multi-armed_bandit)](https://upload.wikimedia.org/wikipedia/commons/8/82/Las_Vegas_slot_machines.jpg){width=50%}
 
 The image above shows a row of slot machines.
-They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spun the wheel (although in the ones seen above it seems to have been replaced by buttons).
+They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spin the wheel (although in the ones seen above it seems to have been replaced by buttons).
 
 Generalizing a bit, let's imagine that we instead have $K$ such arms.
 Maybe they belong to the same, now much more tricky bandit.

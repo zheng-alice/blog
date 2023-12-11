@@ -8,3 +8,12 @@
     width: 86%;
     margin-left: 7%;
 }
+.red {
+    color: rgb(206, 40, 40);
+}
+.green {
+    color: green;
+}
+.blue {
+    color: rgb(0, 0, 204);
+}
