@@ -5,6 +5,7 @@ description: TODO
 date: 2023/12/05
 categories:
   - TODO
+bibliography: blog.bib
 ---
 <!-- Detect anomaly/outlier behavior and the treatment techniques. -->
 
@@ -115,11 +116,12 @@ fig.add_traces(go.Scatter(x=[0,n[0]], y=[0, avg0], mode="lines", name="Original"
 $Z_n = (X_n - \bar{x}) / s$
 
 $$
-H_n = \max(0, H_{n-1} + Z_n - \omega)\ ,
-$$ {#eq-cusum-h}
-$$
-L_n = \min(0, L_{n-1} + Z_n + \omega)\ ,
-$$ {#eq-cusum-l}
+\begin{align}
+    H_n = \max(0, H_{n-1} + Z_n - \omega)\ ,\\
+    L_n = \min(0, L_{n-1} + Z_n + \omega)\ ,
+\end{align}
+$$ {#eq-cusum}
+
 where we set $H_0 = L_0 = 0$.
 
 ```{python}

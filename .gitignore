@@ -4,5 +4,7 @@
 /_extensions/
 /**/__pycache__/
 /posts/data/
+/posts/*_files/
+/posts/*.ipynb
 /.luarc.json
 /.vdoc.py

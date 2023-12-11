@@ -5,19 +5,52 @@ description: TODO
 date: 2023/12/02
 categories:
   - TODO
+bibliography: blog.bib
 filters:
-- include-code-files
+  - include-code-files
 ---
 <!-- Identify the common tasks in machine learning/data mining models for clustering. -->
 
+
+## Clustering
+
+Falling within the realm of **unsupervised learning**, this task deals with unlabeled but adequately distinct data.
+While both it and [classification](4-classification.qmd) involve modeling such differences, clustering in particular starts with no prior informaiton about data labels.
+In cases where partial label information is known, the task is instead considered to be semi-supervised.
+
+The common goal of clustering is to separate data into **clusters** - groups such that data within them is similar and between them is different.
+What this means precisely depends on the measure of similarity used; for raw Euclidean distances it would mean that clusters are far apart literally, whereas for feature embedding spaces they would be apart semantically/conceptually.
+
+Clustering serves a variety of **purposes**:
+
+* **Understanding:** separating data into distinct groups may reveal patterns and highlight important features.
+  Additionally, clustering may be viewed as a form of divide-and-conquer where the clusters may be easier to analyze in isolation.
+* **Preprocessing:** similar to the above, the benefit of being able to analyze data separately can be extended to programmatic solutions.
+  That is, cluster assignment can be used to split data and train models separately for each.
+* **Anomaly detection:** the above would additionally get rid of outliers as they wouldn't belong to any cluster.
+  This makes clustering applicable to [anomaly detection](5-anomaly.qmd) as it can identify points that are distant from all other data.
+
+Clustering in itself isn't a method but a task.
+A plethora of algorithms exist to perform it, thanks to various relevant **considerations** about the type of clustered data:
+
+* **Shape:** while we may typically think of clusters as circular-like objects, they may instead be stretched, spread out, stretched out, bent, etc.
+  For the stretched out type, it additionally becomes important whether data exhibits linear relationships or otherwise lies in nonlinear manifolds.
+* **Data type:** the same considerations from other tasks in machine learning apply: is the data numerical or categorical, are any transforms applicable, is some of the data images/audio/text/etc?
+* **Dimensionality:** for more complex data types, preprocessing or embedding may be in order.
+  High-dimensional data in general poses a challenge due to the *curse of dimensionality*, a phenomenon where regular measures of distance break down and lose meaning.
+  In some circumstances it thus becomes crucial to use methods specifically designed around high-dimensional data.
+
+### Examples
+
+To illustrate the former consideration particularly, we can take a look at some distinct sets of artificial data and the performances of various clustering algorithms.
+Here's a pretty nice visualization of some common algorithms:
+
 ```{python}
 #| code-fold: true
-#| code-summary: "Scatterplot matrix code by sklearn"
+#| code-summary: Clustering scatterplot matrix code by [sklearn](https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html)
 #| fig-cap: A comparison of various clustering methods.
+#| label: fig-clustering
 #| column: page
-# Directly taken from:
-# https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html
-
 import time
 import warnings
 from itertools import cycle, islice
@@ -293,8 +326,124 @@ for i_dataset, (dataset, algo_params) in enumerate(datasets):
 plt.show()
 ```
 
+Whoa, that's a lot of them!
+If you've seen this image before and are particularly observant, you may notice that I threw in an extra algorithm (rightmost column) and a dataset (second-bottom row) - more on those later.
+
+Each of the above algorithms is deserving of a post of its own.
+Here, I will just briefly focus on one, which happens to be the only showcased algorithm that properly clusters the top 5 datasets:
+
+### Spectral Clustering
+
+Yes, spectral as in *spectrum* - i.e., **eigenvalues**.
+I found out about this algorithm back when I was taking intro to linear algebra, and it really stuck with me precisely because it gives a pretty neat interpretation of eigenvalues (which at the time I had a really hard time exemplifying).
+
+We start with a *similarity matrix* $S$, where the $ij$-th value denotes the similarity of data points indexed $i$ and $j$.
+What constitutes as being similar may vary; the example in @fig-clustering simply uses Euclidean distance.
+We then use $S$ to construct a *similarity graph*, a weighted graph with weights $w_{i,j} = s_{i,j}$ if they are past a certain threshold and $0$ (no edge) otherwise.
+This graph's *weighted adjacency matrix* $W$ is essentially $S$ with all sub-threshold values zeroed out.
+Assuming data from $k$ sufficiently distinct clusters is ordered by cluster, the adjacency matrix may look something like
+$$
+W = \begin{bmatrix} W_1 & & & \\ & W_2 & & \\ & & \ddots & \\ & & & W_k \end{bmatrix}\ ,
+$$ {#eq-block}
+
+which you may recognize as a block diagonal matrix.
+
+So, what role do eigenvalues play here?
+Turns out, if $v$ is an eigenvalue of $W_1$, then the same $v$ padded by a bunch of zeros at the bottom is an eigenvalue of $W$.
+You can verify this via @eq-block; $W_1 v = v \lambda$ necessarily implies $W \begin{bmatrix} v \\ 0 \end{bmatrix} = \begin{bmatrix} v \\ 0 \end{bmatrix} \lambda$.
+The same applies for eigenvectors of any cluster, they just need to placed appropriately to act on their cluster's similarity block $W_i$.
+As such, the eigenvalues of $W$ will be grouped according to cluster, having zero values in all other locations.
+Finding these eigenvalues would then reveal the clusters.
+
+Well... sort of.
+In reality, we still have some problems: the eigenvalues can have small/zero entries, and finding all $n$ eigenvalues is just too difficult.
+Instead, we define $D$ to be the diagonal degree matrix, its diagonal entries being the sum of the corresponding rows/columns of $W$.
+We then obtain the *graph Laplacian* $L = D - W$, another diagonal block matrix with an additional property that its rows/columns sum to zero.
+This makes it so multiplying each block $L_i$ by a vector with all entries being $1$ produces the zero vector, making it an eigenvector of $L_i$ with a zero eigenvalue.
+Additionally, the only vectors satisfying this property are just scalar multiples of that identity vector.
+As such, the Laplacian $L$ will have its zero eigenspace spanned by precisely $k$ such identity vectors.
+This adresses both of our previous problems, making it so we only have to find $k$ out of $n$ eigenvectors.
+Using [inverse iteration](https://en.wikipedia.org/wiki/Inverse_iteration) will obtain these eigenvectors only, and do so very efficiently.
+Putting the eigenvectors together as a matrix would then make its rows indicators for which cluster a particular point belongs to.
+In case there is still any ambiguity, the rows can be grouped together using a simpler clustering algorithm like [$k$-means](https://en.wikipedia.org/wiki/K-means_clustering).
+For more details about spectral clustering, see @von_luxburg_tutorial_2007.
+
+#### Graph resonance
+
+A pretty cool interpretation of this Laplacian comes from thinking of the nodes in the similarity graph as being connected by springs - the higher the weight between two nodes, the stronger their connecting spring.
+What happens if we move a single node by some amount?
+The nodes connected to it would be pulled in the same direction according to the strengths of the springs that connect them to the displaced node, the latter being pulled back with the sum of those strengths.
+Note that this force is precisely described by the (negative of) the column of $L$ corresponding to the displaced node.
+If $x$ is the vector representing the displacement of each node, the corresponding force (in the other direction) is given by $Lx$.
+In the case where the displacement is an eigenvector of $L$, we have
+$$
+\sum F = - L v = - \lambda v\ ,
+$$ {#eq-hookes}
+
+which is precisely [Hooke's law](https://en.wikipedia.org/wiki/Hooke%27s_law).
+Thus given an initial displacement $v$, the graph will undergo simple harmonic motion with frequency $\lambda^2$.
+In other words, the eigenpairs $(\lambda, v)$ of $L$ actually describe the **resonant frequencies** $\lambda^2$ and corresponding **vibration modes** of its graph.
+It is for this reason that eigenvalues are crucial to analyzing mechanical resonance - where the graph represents connected parts of a physical object.
+This could be applied to, for intance, designing buildings that are resistant to strong winds and earthquakes.
+
+In our case we saw that the similarity graph had some zero eigenvalues.
+This corresponds to zero frequency - i.e., once we displace the nodes of a single cluster, it experiences no force from the others and just stays in the same place.
+
+### Linearity
+
+So, that's all well and good when similarity relates to Euclidean distance - but as noted before, this becomes less true for high-dimensional data.
+Instead, data may lie in *linear subspaces*, such as when representing the same scene illuminated from different angles, or objects moving at different speeds @elhamifar_sparse_2013.
+A simplified image of what such data could look like is seen in @fig-subspaces below.
+
+![Three linear subspaces. Figure by @elhamifar_sparse_2013.](subspaces.svg){width=50% fig-align="center" #fig-subspaces}
+
+The point where the lines and plane intersect is the origin.
+You may note that this matches the mathematical definiton of linear subspaces, i.e., non-empty and closed under addition and scalar multiplication.
+Alternatively, we may pick any number of vectors and have their span be a linear subspaces.
+Any point in the subspaces would then be a linear combination of such vectors, which are themselves points in the subspace.
+
+You may note that the new dataset is somewhat like a flattened version of @fig-subspaces, with the lines $\mathcal{S}_2$ and $\mathcal{S}_3$ being the diagonals making up the 'X' shape, and the plane $\mathcal{S}_1$ being the remaining points in the background square.
+
 ```{.python include="ssc.py" start-line=9 end-line=18}
 ```
+
+Our goal is then to separate the two diagonals and the square.
+
+
+## Sparse Subspace Clustering
+
+To this end, we will analyze an algorithm based on [spectral clustering](#spectral-clustering), proposed by @elhamifar_sparse_2013.
+This algorithm relies on the *self-expressiveness* property described above, i.e., that points in a subspace can be described by a linear combination of other points from the same subspace.
+Specifically, let $Y = \begin{bmatrix} y_1 & y_2 & \dots & y_n \end{bmatrix}$ be a $d$-by-$n$ matrix of data.
+Then, with every data point $y_i$ we can associate a coefficient vector $c_i$ such that
+$$
+y_i = Y c_i\ ,\qquad
+c_{ii} = 0\ .
+$$ {#eq-vector}
+
+As the above has infinitely many solutions, we will additionally $\text{minimize} ||c_i||_q$.
+Using smaller $q$ will make more coefficients zero, and for $q=1$ will generally only have nonzero coefficients for points within the same subspace.[^q0]
+
+[^q0]: Note that we could also solve for $q=0$, but this is an $\mathsf{NP}$-hard problem.
+
+Letting $C = \begin{bmatrix} c_1 & c_2 & \dots & c_n \end{bmatrix}$, we can rewrite the problem in matrix form as
+$$
+\begin{align}
+    \text{minimize} \quad& ||C||_1 \\
+    \text{such that} \quad& Y = Y C\ ,\\
+    & \mathrm{diag}(C) = 0\ .
+\end{align}
+$$ {#eq-matrix}
+
+Note that the objective is convex and the constraints affine, so this can be solved efficiently using
+
+### Convex optimization
+
+A framework for problems with certain nice properties, [convex optimization](https://en.wikipedia.org/wiki/Convex_optimization) can be applied to a multitude of tasks in various fields.
+While I first encountered it in exactly this context of sparse subspace clustering, I now use a variant of it (semidefinite programming) all the time for quantum-related stuff.
+
+Let's solve an instance of @eq-matrix in practice to see why this matrix $C$ could be useful.
+First, let's construct a simplified version of the dataset shown above, containing fewer points and only the diagonals.
 
 ```{python}
 #| code-fold: true
@@ -309,8 +458,14 @@ Y = np.concatenate((
 ), axis=1) - [[0.5], [0.5]]
 ```
 
+To construct and solve the convex optimization problem, we will use the python package `cvxpy`.
+We essentially just need to declare $C$ as a variable, then specify our objective and constraints.
+The rest is handled by the solver - everything from verifying that the problem is convex to returning its solution.
+
 ```{python}
 #| code-summary: Solve and visualize a convex optimization problem
+#| fig-cap: A heatmap of the obtained coefficient matrix $C$.
+#| label: fig-C
 from cvxpy import Variable, Minimize, norm, diag, Problem, ECOS
 import plotly.express as px
 
@@ -325,9 +480,39 @@ constraints = [Y == Y @ C, diag(C) == 0]
 prob = Problem(objective, constraints)
 prob.solve(solver=ECOS)
 
+# Normalize coefficient matrix
 C = C.value / np.max(np.abs(C.value), axis=0)
 px.imshow(C)
 ```
+
+@fig-C above shows what the (normalized) solution looks like - you may note that it's a block diagonal matrix much like @eq-block.
+This is due to the self-expressiveness property; points from a subspace will only have nonzero coefficients corresponding to other points from the same subspace.
+As such, we may essentially use this $C$ matrix as similarity for (spectral clustering)[#spectral-clustering].
+
+More specifically, you may note that there are two rows with quite large coefficients whereas the others are quite small.
+This comes from minimizing the norm of $C$, leading to us to prioritize points with larger distances from the origin.
+In the case of one-dimensional subspaces like this, we end up picking the farthest point from the origin and expressing the remaining points as scalar multiples of it.
+To better approximate the block structures and make the similarity graph undirected, we thus symmetrize the matrix via $W = |C| + |C|^\top$.
+
+### Implementation
+
+As one last detail, @elhamifar_sparse_2013 proposes a modified version of @eq-matrix that deals with noise
+$$
+\begin{align}
+    \text{minimize} \quad& ||C||_1 + \lambda_e ||E||_1 + \frac{\lambda_z}{2} ||Z||_F^2 \\
+    \text{such that} \quad& Y = Y C + E + Z\ ,\\
+    & \mathrm{diag}(C) = 0\ .
+\end{align}
+$$ {#eq-noise}
+
+The $E$ matrix is meant to account for outliers and the $Z$ matrix for other noise.
+The reference material suggests setting $\lambda_e = \alpha_e / \mu_e$ and $\lambda_e = \alpha_e / \mu_e$ with
+$$
+\mu_e = \min_i \max_{j \neq i} ||y_j||_1\ ,\qquad
+\mu_z = \min_i \max_{j \neq i} |y_i^\top y_j|\ .
+$$ {#eq-coef}
+
+Putting everything together, the algorithm looks like this:
 
 ```{.python include="ssc.py" start-line=27 dedent=4}
 #| code-fold: true

@@ -141,7 +141,7 @@ print(f"Using device: {device}")
 
 ```{python}
 #| code-summary: Load and preprocess data
-#| echo: false
+#| output: false
 transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.5), (0.5))
