@@ -45,6 +45,12 @@ px.scatter(exp_df, x='x', y='y').show();
 
 ![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Linear_least_squares#Example)](https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg)
 
+$$
+\hat{\beta} = (X^\top X)^{-1} X^\top y = X^\dagger y\ ,
+$$ {#eq-ols}
+
+where $X^\dagger$ denotes the left pseudoinverse of $X$.
+
 ```{python}
 #| code-fold: true
 #| code-summary: Code for polynomial OLS

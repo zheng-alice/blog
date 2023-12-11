@@ -1,10 +1,13 @@
 ---
 title: Clustering
 subtitle: Sparse subspace clustering
-description: TODO
+description: In which we overview common tasks and models for clustering. Includes an exploration of spectral clustering and sparse subspace clustering, and an implementation of the latter.
 date: 2023/12/02
 categories:
-  - TODO
+  - Clustering
+  - Unsupervised learning
+  - Eigenvalues
+  - Convex optimization
 bibliography: blog.bib
 filters:
   - include-code-files
