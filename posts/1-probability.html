@@ -238,7 +238,7 @@ div.csl-indent {
 <p>Uh… what? Let’s break this down a little.</p>
 <section id="example" class="level3">
 <h3 class="anchored" data-anchor-id="example">Example</h3>
-<p>Let <span class="math inline">\(\Omega = \{😸,😿\}\)</span> denote the outcomes of an experiment, with associated probabilities <span class="math inline">\(\mathrm{P}(😸) = 0.5\)</span> and <span class="math inline">\(\mathrm{P}(😿) = 0.5\)</span>. What is the average outcome of this experiment? Certainly, it can’t be <span class="math inline">\(0.5😸 + 0.5😿\)</span>; that quantity doesn’t make sense. We instead need something we can <em>count</em>, such as the <em>number of happy cats</em>. This we can denode by a <strong>random variable</strong> <span class="math inline">\(X\)</span>, something that maps event outcomes in <span class="math inline">\(\Omega\)</span> to measurable quantities in <span class="math inline">\(E\)</span>, which in this case is <span class="math inline">\(\{0, 1\}\)</span>. Let <span class="math inline">\(X(😸) = 1\)</span> and <span class="math inline">\(X(😿) = 0\)</span>; then, to get the probability of a particular outcome in <span class="math inline">\(E\)</span> we must find all entries in <span class="math inline">\(\Omega\)</span> that map to it and sum their probabilities. This can be written as <span id="eq-rv-example"><span class="math display">\[
+<p>Let <span class="math inline">\(\Omega = \{😸,😿\}\)</span> denote the outcomes of an experiment, with associated probabilities <span class="math inline">\(\mathrm{P}(😸) = 0.5\)</span> and <span class="math inline">\(\mathrm{P}(😿) = 0.5\)</span>. What is the average outcome of this experiment? Certainly, it can’t be <span class="math inline">\(0.5😸 + 0.5😿\)</span>; that quantity doesn’t make sense. We instead need something we can <em>count</em>, such as the <em>number of happy cats</em>. This we can denote by a <strong>random variable</strong> <span class="math inline">\(X\)</span>, something that maps event outcomes in <span class="math inline">\(\Omega\)</span> to measurable quantities in <span class="math inline">\(E\)</span>, which in this case is <span class="math inline">\(\{0, 1\}\)</span>. Let <span class="math inline">\(X(😸) = 1\)</span> and <span class="math inline">\(X(😿) = 0\)</span>; then, to get the probability of a particular outcome in <span class="math inline">\(E\)</span> we must find all entries in <span class="math inline">\(\Omega\)</span> that map to it and sum their probabilities. This can be written as <span id="eq-rv-example"><span class="math display">\[
 \mathrm{P}(X = 1) = \mathrm{P}(\{ \omega \in \Omega : X(\omega) = 1 \}) = \mathrm{P}(😸) = 0.5\ ,
 \tag{1}\]</span></span></p>
 <p>and analogously for <span class="math inline">\(\mathrm{P}(X = 0) = \mathrm{P}(😿) = 0.5\)</span>. We can thus evaluate the <em>expected value</em> as <span id="eq-rv-expected"><span class="math display">\[
@@ -290,8 +290,8 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 </div>
 <p>The image above shows a row of slot machines. They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spin the wheel (although in the ones seen above it seems to have been replaced by buttons).</p>
 <p>Generalizing a bit, let’s imagine that we instead have <span class="math inline">\(K\)</span> such arms. Maybe they belong to the same, now much more tricky bandit. Or, maybe they model the possibility of playing different games in the same casino. In any case, at every time point <span class="math inline">\(t\)</span> we must choose one such action <span class="math inline">\(a_t \in [K]\)</span> to play, only learning information about its underlying distribution through the rewards we receive.</p>
-<p>There are various possible types of the bandit setting, but here we will only consider <strong>stochastic</strong> (as opposed to adversarial) losses and <strong>multi-armed</strong> (as opposed to linear or gaussian process) bandits.</p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-pseudocode-index="1" data-indent-size="1.8em" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-alg-title="Algorithm">
+<p>There are various possible types of the bandit setting, but here we will only consider <strong>stochastic</strong> (as opposed to adversarial) losses and <strong>multi-armed</strong> (as opposed to linear or Gaussian process) bandits.</p>
+<div id="alg-explore-exploit" class="pseudocode-container" data-indent-size="1.8em" data-pseudocode-index="1" data-alg-title="Algorithm" data-line-number="true" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Stochastic MAB (Framework)} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Choose an action $a_t \in [K]$. \State Suffer loss $z_t[a_t]$ and also only observe $z_t[a_t]$. \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -300,18 +300,18 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <p>Our goal in this setting is to design an algorithm fitting this framework that minimizes the following quantity, known as regret <span id="eq-regret"><span class="math display">\[
 \mathcal{R}_T = \sum_{t=1}^T z_t[a_t] - \min_i \sum_{t=1}^T z_t[i]\ .
 \tag{7}\]</span></span></p>
-<p>Such a definition makes regret a useful metric in many situations, even when experiencing persintent penalties or unreasonable adversaries. In particular, it evaluates performance against the best possible fixed action in hindsight - a value that will compensate for the above scenarios. Note that the definition given in <a href="#eq-regret">Equation&nbsp;7</a> makes <span class="math inline">\(\mathcal{R}_T\)</span> a <a href="#random-variables">random variable</a>, meaning that in practice we aim to bound <span class="math inline">\(\mathbb{E}[\mathcal{R}_T]\)</span>, the expected regret.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Such a definition makes regret a useful metric in many situations, even when experiencing persistent penalties or unreasonable adversaries. In particular, it evaluates performance against the best possible fixed action in hindsight - a value that will compensate for the above scenarios. Note that the definition given in <a href="#eq-regret">Equation&nbsp;7</a> makes <span class="math inline">\(\mathcal{R}_T\)</span> a <a href="#random-variables">random variable</a>, meaning that in practice we aim to bound <span class="math inline">\(\mathbb{E}[\mathcal{R}_T]\)</span>, the expected regret.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>We may use the terms loss and reward interchangeably, as they can be thought of as negatives of each other. This is again owed to the definition of regret in <a href="#eq-regret">Equation&nbsp;7</a>, by which minimizing losses is the same as maximizing rewards.</p>
 <section id="explore-then-exploit" class="level3">
 <h3 class="anchored" data-anchor-id="explore-then-exploit">Explore-then-exploit</h3>
 <p>A central issue in the multi-armed bandit problem is that of <strong>exploration versus exploitation</strong> - whether to prioritize investigating the yet unknown, or to take advantage of information already learned. It is not a coincidence this problem appears both here and in <strong>reinforcement learning</strong> - both fall within the realm of <strong>online learning</strong> (when decisions and information are processed sequentially), the only thing separating them is the addition of states.</p>
 <p>We start with a simple algorithm that does the two stages separately <span class="citation" data-cites="ji_online_2022">(<a href="#ref-ji_online_2022" role="doc-biblioref">Ji 2022</a>, Lecture 14)</span>.</p>
-<div id="alg-explore-exploit" class="pseudocode-container" data-pseudocode-index="2" data-indent-size="1.8em" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-alg-title="Algorithm">
+<div id="alg-explore-exploit" class="pseudocode-container" data-indent-size="1.8em" data-pseudocode-index="2" data-alg-title="Algorithm" data-line-number="true" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Explore-then-exploit} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Explore phase: try each arm $N$ times. \State Exploit phase: determine $\tilde{a}$ with the highest average reward; then play $\tilde{a}$ in all remaining rounds. \EndFor \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<p>We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm inidvidually. That is, we want to bound the deviation of its true mean <span class="math inline">\(\mu(a)\)</span> from its approximation <span class="math inline">\(\hat{\mu}(a)\)</span> after that arm has been pulled <span class="math inline">\(N\)</span> times. Let <span class="math inline">\(\beta_N = \sqrt{\frac{2 \log T}{N}}\)</span>, by <a href="#thm-hoeffding">Hoeffding’s inequality</a>, <span id="eq-exp-arm"><span class="math display">\[
+<p>We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm individually. That is, we want to bound the deviation of its true mean <span class="math inline">\(\mu(a)\)</span> from its approximation <span class="math inline">\(\hat{\mu}(a)\)</span> after that arm has been pulled <span class="math inline">\(N\)</span> times. Let <span class="math inline">\(\beta_N = \sqrt{\frac{2 \log T}{N}}\)</span>, by <a href="#thm-hoeffding">Hoeffding’s inequality</a>, <span id="eq-exp-arm"><span class="math display">\[
 \mathrm{P}(|\hat{\mu}(a) - \mu(a)| \leq \beta_N) \geq 1 - 2 / T^4\ .
 \tag{8}\]</span></span></p>
 <p>We define a <em>good event</em> <span class="math inline">\(\mathcal{E}\)</span> as the above being true for all arms, meaning that by the union bound <span id="eq-exp-good"><span class="math display">\[
@@ -361,7 +361,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 <section id="epsilon-greedy" class="level3">
 <h3 class="anchored" data-anchor-id="epsilon-greedy">Epsilon-greedy</h3>
 <p>Instead of doing exploration all at once, we may spread it out over all rounds, making it less frequent over time <span class="citation" data-cites="ji_online_2022">(<a href="#ref-ji_online_2022" role="doc-biblioref">Ji 2022</a>, Lecture 14)</span>. You’ll see this strategy used quite frequently in reinforcement learning, as it is pretty simple to implement.</p>
-<div id="alg-epsilon-greedy" class="pseudocode-container" data-pseudocode-index="3" data-indent-size="1.8em" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-alg-title="Algorithm">
+<div id="alg-epsilon-greedy" class="pseudocode-container" data-indent-size="1.8em" data-pseudocode-index="3" data-alg-title="Algorithm" data-line-number="true" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Epsilon-greedy} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State Toss a coin with success rate $\epsilon_t$. \If{success} \State Explore: choose an arm uniformly at random. \Else \State Exploit: choose an arm with the highest average reward so far. \EndIf \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -421,7 +421,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
     \mathrm{LCB}_t(a) &amp;= \hat{\mu}_t(a) - \beta_t(a)\ .
 \end{align}
 \tag{12}\]</span></span></p>
-<div id="alg-elimination" class="pseudocode-container" data-pseudocode-index="4" data-indent-size="1.8em" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-alg-title="Algorithm">
+<div id="alg-elimination" class="pseudocode-container" data-indent-size="1.8em" data-pseudocode-index="4" data-alg-title="Algorithm" data-line-number="true" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Successive Elimination} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \State Initialize active arm set $\mathcal{A}_1 = [K]$. \For{$p = 1, 2, \ldots$} \State Play each arm in $\mathcal{A}_p$ once. \State Let $t$ be the time at the end of the current phase $p$. \State $\mathcal{A}_{p+1} = \{ a \in \mathcal{A}_p : \mathrm{UCB}_t (a) \geq \max_{a' \in \mathcal{A}_p} \mathrm{LCB}_t (a) \}$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -489,8 +489,8 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 </section>
 <section id="ucb" class="level3">
 <h3 class="anchored" data-anchor-id="ucb">UCB</h3>
-<p>Since the event of eliminating an arm may be quite rare, we may instead just sample the arm with the highest <span class="math inline">\(\mathrm{UCB}_t(a)\)</span>. This strategy demonstrates a principle known as <em>optimism in the face of uncertainty</em> <span class="citation" data-cites="ji_online_2022">Ji (<a href="#ref-ji_online_2022" role="doc-biblioref">2022</a>, Lecture 15)</span> - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.</p>
-<div id="alg-ucb" class="pseudocode-container" data-pseudocode-index="5" data-indent-size="1.8em" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-alg-title="Algorithm">
+<p>Since the event of eliminating an arm may be quite rare, we may instead just sample the arm with the highest <span class="math inline">\(\mathrm{UCB}_t(a)\)</span>. This strategy demonstrates a principle known as <em>optimism in the face of uncertainty</em> <span class="citation" data-cites="ji_online_2022">(<a href="#ref-ji_online_2022" role="doc-biblioref">Ji 2022</a>, Lecture 15)</span> - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.</p>
+<div id="alg-ucb" class="pseudocode-container" data-indent-size="1.8em" data-pseudocode-index="5" data-alg-title="Algorithm" data-line-number="true" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{UCB} \begin{algorithmic} \Require{$K$ and $T$ (both known), unknown reward distributions $\mathcal{D}_a$.} \For{$t = 1, 2, \ldots$} \State $a_t = \arg\max_{a \in [K]} \mathrm{UCB}_t (a)$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -677,7 +677,7 @@ P \left( \Biggr \lvert \sum_{i=1}^n (X_i - \mathbb{E}[X_i]) \Biggr \rvert \leq \
 </div>
 </div>
 <p>The above performance roughly matches what we should expect. Most notably, <a href="#alg-explore-exploit">Explore-then-exploit</a> accumulates linear regret until a certain time, where it sharply switches to exploitation and plateus. The other algorithms gently bend down towards it instead, allowing them to achieve lower final regrets.</p>
-<p>Note that the above shouldn’t be used as a definitive guide for how the algorithms compare, as it’s specific to the problem instance and algorithm parameters. In particular, the performance of <a href="#alg-successive-elimination">Successive elimination</a> is highly dependent on its artificial parameter <span class="math inline">\(\delta = 1500\)</span>, as it determines how soon the trend starts bending toward a plateu. Still, it may give an indication as to why the <a href="#alg-ucb">UCB</a> algorithm and its varians are so common in practice.</p>
+<p>Note that the above shouldn’t be used as a definitive guide for how the algorithms compare, as it’s specific to the problem instance and algorithm parameters. In particular, the performance of <a href="#alg-successive-elimination">Successive elimination</a> is highly dependent on its artificial parameter <span class="math inline">\(\delta = 1500\)</span>, as it determines how soon the trend starts bending toward a plateu. Still, it may give an indication as to why the <a href="#alg-ucb">UCB</a> algorithm and its variants are so common in practice.</p>
 
 
 <!-- -->
@@ -1150,7 +1150,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>What is the average outcome of this experiment?</span>
 <span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>Certainly, it can't be $0.5😸 + 0.5😿$; that quantity doesn't make sense.</span>
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>We instead need something we can *count*, such as the *number of happy cats*.</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>This we can denode by a **random variable** $X$, something that maps event outcomes in $\Omega$ to measurable quantities in $E$, which in this case is $<span class="sc">\{</span>0, 1<span class="sc">\}</span>$.</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>This we can denote by a **random variable** $X$, something that maps event outcomes in $\Omega$ to measurable quantities in $E$, which in this case is $<span class="sc">\{</span>0, 1<span class="sc">\}</span>$.</span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>Let $X(😸) = 1$ and $X(😿) = 0$; then, to get the probability of a particular outcome in $E$ we must find all entries in $\Omega$ that map to it and sum their probabilities.</span>
 <span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>This can be written as</span>
 <span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>$$</span>
@@ -1242,7 +1242,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>Or, maybe they model the possibility of playing different games in the same casino.</span>
 <span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>In any case, at every time point $t$ we must choose one such action $a_t \in <span class="co">[</span><span class="ot">K</span><span class="co">]</span>$ to play, only learning information about its underlying distribution through the rewards we receive.</span>
 <span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>There are various possible types of the bandit setting, but here we will only consider **stochastic** (as opposed to adversarial) losses and **multi-armed** (as opposed to linear or gaussian process) bandits.</span>
+<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>There are various possible types of the bandit setting, but here we will only consider **stochastic** (as opposed to adversarial) losses and **multi-armed** (as opposed to linear or Gaussian process) bandits.</span>
 <span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="in">```pseudocode</span></span>
 <span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: alg-explore-exploit</span></span>
@@ -1273,7 +1273,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>\mathcal{R}_T = \sum_{t=1}^T z_t[a_t] - \min_i \sum_{t=1}^T z_t<span class="co">[</span><span class="ot">i</span><span class="co">]</span>\ .</span>
 <span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>$$ {#eq-regret}</span>
 <span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>Such a definition makes regret a useful metric in many situations, even when experiencing persintent penalties or unreasonable adversaries.</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>Such a definition makes regret a useful metric in many situations, even when experiencing persistent penalties or unreasonable adversaries.</span>
 <span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>In particular, it evaluates performance against the best possible fixed action in hindsight - a value that will compensate for the above scenarios.</span>
 <span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>Note that the definition given in @eq-regret makes $\mathcal{R}_T$ a [random variable](#random-variables), meaning that in practice we aim to bound $\mathbb{E}[\mathcal{R}_T]$, the expected regret.<span class="ot">[^pseudo]</span></span>
 <span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a></span>
@@ -1310,7 +1310,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a><span class="in">\end{algorithm}</span></span>
 <span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm inidvidually.</span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm individually.</span>
 <span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a>That is, we want to bound the deviation of its true mean $\mu(a)$ from its approximation $\hat{\mu}(a)$ after that arm has been pulled $N$ times.</span>
 <span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>Let $\beta_N = \sqrt{\frac{2 \log T}{N}}$, by <span class="co">[</span><span class="ot">Hoeffding's inequality</span><span class="co">](#thm-hoeffding)</span>,</span>
 <span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a>$$</span>
@@ -1561,7 +1561,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-459"><a href="#cb8-459" aria-hidden="true" tabindex="-1"></a><span class="fu">### UCB</span></span>
 <span id="cb8-460"><a href="#cb8-460" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-461"><a href="#cb8-461" aria-hidden="true" tabindex="-1"></a>Since the event of eliminating an arm may be quite rare, we may instead just sample the arm with the highest $\mathrm{UCB}_t(a)$.</span>
-<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>This strategy demonstrates a principle known as *optimism in the face of uncertainty* @ji_online_2022 <span class="co">[</span><span class="ot">Lecture 15</span><span class="co">]</span> - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.</span>
+<span id="cb8-462"><a href="#cb8-462" aria-hidden="true" tabindex="-1"></a>This strategy demonstrates a principle known as *optimism in the face of uncertainty* <span class="co">[</span><span class="ot">@ji_online_2022, Lecture 15</span><span class="co">]</span> - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.</span>
 <span id="cb8-463"><a href="#cb8-463" aria-hidden="true" tabindex="-1"></a><span class="in">```pseudocode</span></span>
 <span id="cb8-464"><a href="#cb8-464" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: alg-ucb</span></span>
 <span id="cb8-465"><a href="#cb8-465" aria-hidden="true" tabindex="-1"></a><span class="in">#| html-indent-size: "1.8em"</span></span>
@@ -1759,7 +1759,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-665"><a href="#cb8-665" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-666"><a href="#cb8-666" aria-hidden="true" tabindex="-1"></a>Note that the above shouldn't be used as a definitive guide for how the algorithms compare, as it's specific to the problem instance and algorithm parameters.</span>
 <span id="cb8-667"><a href="#cb8-667" aria-hidden="true" tabindex="-1"></a>In particular, the performance of <span class="co">[</span><span class="ot">Successive elimination</span><span class="co">](#alg-successive-elimination)</span> is highly dependent on its artificial parameter $\delta = 1500$, as it determines how soon the trend starts bending toward a plateu.</span>
-<span id="cb8-668"><a href="#cb8-668" aria-hidden="true" tabindex="-1"></a>Still, it may give an indication as to why the <span class="co">[</span><span class="ot">UCB</span><span class="co">](#alg-ucb)</span> algorithm and its varians are so common in practice.</span>
+<span id="cb8-668"><a href="#cb8-668" aria-hidden="true" tabindex="-1"></a>Still, it may give an indication as to why the <span class="co">[</span><span class="ot">UCB</span><span class="co">](#alg-ucb)</span> algorithm and its variants are so common in practice.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
