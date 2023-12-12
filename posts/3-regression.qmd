@@ -79,7 +79,7 @@ So, for sets of three or more points, unless they are perfectly collinear, you'l
 Such systems are also known as *overdetermined*.
 The result may look something like this:
 
-![Visualization of residuals in linear regression. Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Linear_least_squares#Example)](https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg){#fig-residuals}
+![Visualization of residuals in linear regression. Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Linear_least_squares#Example).](https://upload.wikimedia.org/wikipedia/commons/b/b0/Linear_least_squares_example2.svg){#fig-residuals}
 
 The vertical [green]{.green} lines indicate *residuals* - the things you would want to avoid to get a good fit.
 Specifically, we wish to minimize the sum of some function of the residuals; common choices include the $\ell_1$ and $\ell_2$ norms.

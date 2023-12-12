@@ -6,7 +6,7 @@ date: 2023/12/01
 categories:
   - Probability theory
   - Random variables
-  - Concentration bounds
+  - Concentration inequalities
   - Multi-armed bandits
   - Online learning
 bibliography: blog.bib
@@ -124,7 +124,7 @@ You may recall that this is consistent with the [central limit theorem](https://
 
 I first encountered these through a graduate course I took with Dr. Bo @ji_online_2022; the algorithms and analyses below (as well as the [concentration bounds](#concentration-bounds) discussion above) are all taken from lecture notes from that class, although they are originally based on a book by @slivkins_introduction_2022.
 
-![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Multi-armed_bandit)](https://upload.wikimedia.org/wikipedia/commons/8/82/Las_Vegas_slot_machines.jpg){width=50%}
+![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Multi-armed_bandit).](https://upload.wikimedia.org/wikipedia/commons/8/82/Las_Vegas_slot_machines.jpg){width=50%}
 
 The image above shows a row of slot machines.
 They are otherwise known as one-armed bandits, as they steal money from you and have one arm you must pull to spin the wheel (although in the ones seen above it seems to have been replaced by buttons).

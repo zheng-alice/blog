@@ -1,22 +1,145 @@
 ---
 title: Classification
-description: TODO
+description: In which we overview classification, applying it to a simple and then a more complicated dataset.
 date: 2023/12/04
 categories:
-  - TODO
+  - Classification
+  - Supervised learning
+  - Learning theory
+  - Naive Bayes
+  - Neural network
 ---
 <!-- Describe the algorithms, theories, and applications related to machine learning/data mining for classification. -->
 
 
-![Image credit: [sklearn](https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html)](https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png){column=page}
+Classification is a **supervised learning** method, much like [regression](3-regression.qmd).
+Unlike [regression](3-regresison.qmd), it predicts features not continuous, but categorical and unordered.
+Such features then denote the *class* that each point belongs to - not unlike assigning a cluster.
+Indeed, both classification and [clustering](2-clustering.qmd) work with data that is typically sufficiently distinct, that they must then learn to separate into groups.
+The crucial difference is that classification is given the *labels* of the training data, which it then must generalize to the *testing* set.
+
+Various considerations and regimes for classification exist:
+
+* **Offline vs. online:** most algorithms are of the former type, where they are given data first and queried only after all such data has been made available.
+  On the contrary, others such as [bandit algorithms](1-probability.qmd#multi-armed-bandits) and [changepoint detection](5-anomaly.qmd#changepoint-detection) learn only by making mistakes on the already evaluated examples.
+  While such algorithms commonly relate to reinforcement learning, they could be applied to all kinds of areas - including clustering and classification.
+* **Eager vs. lazy:** out of the offline algorithms, some may choose not to even process given data, instead only looking at it when being queried.
+  Such algorithms are known as lazy; one example would be $k$-nearest neighbors classification.
+* **Binary/multi-class/multi-label:** the most straightforward type of classification is distinguishing between two classes, or equivalently answering a yes/no question.
+  Many algorithms extend to output one of many clusters, yet some others need nontrivial modifications.
+  Lastly, specially-generalized algorithms exist that can assign multiple class labels to one point.
+* **Balanced/imbalanced:** many algorithms assume that the ground truth clusters are of approximately the same size.
+  Yet, many datasets have an abundance of one label compared to another - such as when detecting a rare disease.
+  In such cases, certain assumptions may break down; for instance, having a dataset with $95%$ labels class $A$ and $5%$ class $B$ makes the trivial algorithm that always picks $A$ perform with $95%$ accuracy.
+  As such, the "random" baseline is now $95%$ instead of $50%$.
+  This imbalance can force even the more powerful models to shy away from predicting the rare class, stumping learning.
+  To combat this, one can apply strategies such as *oversampling* and *undersampling*.
+
+![A comparison of various classification methods. Image credit: [sklearn](https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html).](https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png){#fig-classification}
+
+
+## Learning theory
+
+Before we dive into specific algorithms and their applications, it would be useful to review the mathematical theory behind clustering (and machine learning more broadly).
+This is a fairly mature and encompassing theory, being an umbrella term for many important concepts such as VC theory, online learning, and PAC learning.
+
+Suppose we have some unknown target function $f^\dagger: \mathcal{X} \to \mathcal{Y}$ that maps data to labels.
+We wish to model this function, but the only information we have about it is how it acts on the data.
+In addition, we only have a finite amount of training examples $D = \{(x_1,y_1), \ldots (x_n,y_n)\} \sim \mathcal{D}$.
+We wish to approximate $f^\dagger$ via some other function $\hat{f}$ that not only maps each $x_i \mapsto y_i$, but also *generalizes* to doing this for any $(x,y) \sim \mathcal{D}$.
+The approximation $\hat{f}$ will instead map $x$ to some $\hat{y}$, and to measure the quality of this output, we will choose a *loss function* $L(\hat{y},y)$ of interest (often, the indicator function).
+More formally, we can evaluate an approximation $f$ via its **risk**, defined as
+$$
+R(f) = \mathbb{E}[L(f(x), y)] = \int L(f(x), y) \mathrm{dP}(x,y)\ .
+$$ {#eq-risk}
+
+This metric choice may seem a bit odd, but necessary since sampling $(x,y)$ from $\mathcal{D}$ means they are [random variables](1-probability.qmd#random-variables).
+In addition, we can't even evaluate the above quantity since we don't know $\mathcal{D}$ in the first place.
+
+So, what to do?
+Instead, we just evaluate on the available data to obtain the **empirical risk** of $f$,
+$$
+R_\text{emp}(f) = \frac{1}{n} \sum_{i=1}^n L(f(x_i), y_i)\ .
+$$ {#eq-empirical}
+
+Outside of learning theory, risk and empirical risk may be referred to as testing and training accuracy.
+
+The next question is how to find our approximation $\hat{f}$.
+To do this, we need to start with picking a *hypothesis class* $\mathcal{H}$, representing all possible models (and parameters) we could potentially end up with.
+We then compute
+$$
+\hat{f} = \arg\min_{f \in \mathcal{H}} R_\text{emp}(f)\ ,
+$$ {#eq-fhat}
+
+and hope that it is close to
+$$
+f^* = \arg\min_{f \in \mathcal{H}} R(f)\ .
+$$ {#eq-fstar}
+
+So, at this point we have already accumulated a couple potential sources of error.
+The following picture helps to illustrate them.
+
+![Image credit: [Han Bao](https://hermite.jp/post/erm-optimal-convergence-rate/).](https://hermite.jp/img/201802/estimation-approximation-error.png){width=50%}
+
+When restricting ourselves to $\mathcal{H}$, we demoted the best attainable function from $f^\dagger$ to $f^*$ resulting in an [approximation error]{.red}.
+Then, since we only have a limited-size dataset, the best possible approximation to $f^*$ we can get is $\hat{f}$, which incurs an [estimation error]{.blue}.
+
+So, what should we do to minimize these errors?
+The quality of the [approximation]{.red} primarily depends on the chosen hypothesis class - making it include more complex models decreases the error.
+As for [estimation]{.blue}, there are various bounds that relate it to parameters; though, the common theme is that generalization is improved with a larger $|D| = n$ and a smaller $|\mathcal{H}|$.
+However, the latter condition seems almost directly contradictory to the one we need for better approximations, i.e., more complex models.
+The following graphic illustrates this tradeoff (occasionally also referred to as the underfitting/overfitting or bias/variance tradeoff)
+
+![Tradeoff of estimation and approximation errors.](tradeoff.svg){width=50%}
+
+So, is all lost?
+Not exactly; the conditions aren't directly contradictory - we could minimize both by finding an $\mathcal{H}$ that contains as few models as possible, but the ones it contains are accurate at modeling the desired data.
+This is a task easier said than done, as we need to carefully discard all unneccessary models, while making sure the important ones are retained.
+The search for such a hypothesis class $\mathcal{H}$ is perhaps what drives the creation of many various types of machine learning algorithms.
+
 
 ## Simple dataset
 
+We start our evaluation by analyzing one of the algorithms featured in @fig-classification (second column from the right), **Naive Bayes**.
+We can see that it performs fairly well on the artificial data, separating it sufficiently but also generalizing smoothly to outside of the provided domain.
+Let's see how it fares against data with a couple more dimensions.
+
+### Naive Bayes
+
+But first, a small introduction of the algorithm itself (mostly based on its [Wikipedia](https://en.wikipedia.org/wiki/Naive_Bayes_classifier) article).
+As evident by its name, it relies on Bayes' theorem
+$$
+\mathrm{P}(k | x) = \frac{\mathrm{P}(x | k) \mathrm{P}(k)}{\mathrm{P}(x)}\ ,
+$$ {#eq-bayes}
+
+where $k$ is the event of the data $x = x_1, \ldots x_n$ belonging to class $k$.
+Naturally, the quantity on the left of @eq-bayes is exactly what would let us perform classification, so we use the quantity on the right (ignoring the denominator as it doesn't depend on $k$) to compute it.
+The numerator is equal to $\mathrm{P}(x, k)$, which we may by chain rule write as
+$$
+\mathrm{P}(x_1, \ldots, x_n, k)
+= \mathrm{P}(x_1 | x_2, \ldots x_n, k) \mathrm{P}(x_2 | x_3, \ldots x_n, k) \dots \mathrm{P}(x_n, k) \mathrm{P}(k)\ .
+$$ {#eq-chain}
+
+To go further, we need an assumption - the *conditional independence* (a.k.a. naive Bayes) assumption.
+Specifically, we have that $\mathrm{P}(x_i | x_{i+1}, \ldots, x_n, k) = \mathrm{P} (x_i | k)$, and thus
+$$
+\mathrm{P}(k | x) \propto \mathrm{P}(k, x) = \mathrm{P}(k) \prod_{i=1}^n \mathrm{P}(x_i | k)\ .
+$$ {#eq-naive}
+
 ### Iris
 
-![Image credit: [Sebastian Raschka](https://sebastianraschka.com/Articles/2015_pca_in_3_steps.html)](https://sebastianraschka.com/images/blog/2015/principal_component_analysis_files/iris.png){width=75%}
+I don't think this dataset really needs an introduction, you've almost certainly seen it before.
+In any case, it has four features that describe the length and width of flower petals and sepals, as seen below.
 
-![Image credit: [Gaurav Chauhan](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/)](https://machinelearninghd.com/wp-content/uploads/2021/03/iris-dataset.png)
+![Image credit: [Sebastian Raschka](https://sebastianraschka.com/Articles/2015_pca_in_3_steps.html).](https://sebastianraschka.com/images/blog/2015/principal_component_analysis_files/iris.png){width=75%}
+
+The question is; could you tell which of the following three flowers you're looking at?
+
+![Image credit: [Gaurav Chauhan](https://machinelearninghd.com/iris-dataset-uci-machine-learning-repository-project/).](https://machinelearninghd.com/wp-content/uploads/2021/03/iris-dataset.png)
+
+Except, you wouldn't be actually looking at the flowers but instead just those four numbers.
+It may instead be easier to see the difference if the values are plotted laterally.
+Below, petal length is denoted by size and petal width by transparency.
 
 ```{python}
 #| code-fold: true
@@ -34,6 +157,8 @@ fig.update_traces(marker=dict(opacity=op), selector=dict(mode='markers'))
 fig.show();
 ```
 
+Or, perhaps in a 3D plot that shows all four features (petal length is still marker size).
+
 ```{python}
 #| code-fold: true
 #| code-summary: 3D scatterplot of iris
@@ -44,8 +169,14 @@ fig = px.scatter_3d(iris, x="sepal_width", y="sepal_length", z="petal_width",
 fig.show();
 ```
 
+I don't know about you, but some of the points between versicolor and virginia still seem pretty overlapping.
+Let's see how the algorithm compares!
 
-### Naive Bayes
+
+### Evaluation
+
+Lucky for us, Naive Bayes is a common algorithm with many implementations.
+We'll be using one by `sklearn`.
 
 ```{python}
 #| code-summary: Naive bayes classifier
@@ -64,11 +195,9 @@ print(f"Accuracy:  {accuracy_score(y_test, y_pred):.4f}\n"
       f"Precision: {precision_score(y_test, y_pred, average='macro'):.4f}")
 ```
 
-### Performance
-
 ```{python}
 #| code-fold: true
-#| code-summary: Code for plotting confusion matrix
+#| code-summary: Code for plotting the confusion matrix
 #| fig-align: center
 import seaborn as sn
 import pandas as pd
@@ -81,6 +210,11 @@ df_cm = pd.DataFrame(conf, index=names, columns=names)
 plt.figure(figsize = (4,3))
 sn.heatmap(df_cm, annot=True, fmt='d');
 ```
+
+From the above, we can gauge the performance as quite good - the algorithm only mislabels $4$ points out of a testing set of size $75$, while being given a training set of only size $75$.
+
+Let's see where it made mistakes.
+Predictions are denoted by outline colors, points where the inner color doesn't match are mislabeled.
 
 ```{python}
 #| code-fold: true
@@ -99,6 +233,12 @@ for symbol, color in fix.items():
 fig.show();
 ```
 
+As expected, only a few points are mislabeled.
+There were a tiny bit more than in the confusion matrix, as the scatterplot includes both the training and testing sets.
+
+We can also display this on the 3D plot, but it unfortunately has a bug where the outline thickness cannot be increased and is barely visible.
+To compensate, predicted classes are additionally denoted by the marker shape.
+
 ```{python}
 #| code-fold: true
 #| code-summary: 3D scatterplot of iris & predictions
@@ -113,16 +253,38 @@ for symbol, color in fix.items():
 fig.show();
 ```
 
+This makes the mislabeled points a bit easier to identify, revealing that there are $6$ in total.
+
 
 ## Complex dataset
 
+That seems to have been too easy.
+Let's try something harder.
+
 ### MNIST
 
-![Image credit: [Orhan G. Yalçın](https://towardsdatascience.com/image-classification-in-10-minutes-with-mnist-dataset-54c35b77a38d)](https://miro.medium.com/v2/resize:fit:720/format:webp/1*XdCMCaHPt-pqtEibUfAnNw.png)
+Once again, you've probably seen this one before.
+The data consists of hand-drawn digits, which we must then classify.
+
+![Image credit: [Orhan G. Yalçın](https://towardsdatascience.com/image-classification-in-10-minutes-with-mnist-dataset-54c35b77a38d).](https://miro.medium.com/v2/resize:fit:720/format:webp/1*XdCMCaHPt-pqtEibUfAnNw.png)
 
 ### Neural network
 
-[pytorch tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html)
+Due to the high-dimensionality of the data, we now need to look beyond classical machine learning methods.
+One approach that has gained widespread popularity over the last decade is **deep learning**, i.e., models with many layers to model complex semantics.
+
+Such models are commonly **neural networks** - architectures supposedly inspired by neurons in a brain.
+Each neuron takes inputs from several others, aggregates them (plus a bias), thes passes through an activation function and onto the next layer.
+The nonlinearity of the activation step in particular makes it possible for complex behaviors to arise from this structure.
+Another important reason for these networks being so widespread is that the neurons are neatly arranged in layers, making their associated operations efficiently computable via *matrix multiplication* - an operation with abundant hardware dedicated to it thanks to computer graphics.
+
+In the following example, we'll be using a special type of neural network - a **convolutional** neural net (CNN) - specifically designed to process image inputs.
+Its layers replace the fully-connected structure by the convolution of a single kernel of weights.
+This makes the patterns learned by the kernels applicable to many parts of the image, reduces the number of model parameters (lower $|\mathcal{H}|$ - good!) while being able to model data effectively (lower approximation error - good!), and introducing spatial locality into the architecture.
+
+For this example, we'll be mostly following this [`pytorch` tutorial](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html).
+First, load and normalize the dataset.
+Note that `pytorch` does this through a class called `DataLoader`, which has the benefit of avoiding storing the entire dataset in memory.
 
 ```{python}
 #| code-fold: true
@@ -157,6 +319,12 @@ testloader = DataLoader(testset, batch_size=batch_size, shuffle=False, num_worke
 names = list(range(10))
 ```
 
+Now, define the actual neural network.
+I've condensed[^runtime] it quite a bit from the tutorial, keeping the two convolutional layers but removing some dense layers at the end.
+
+[^runtime]: As I'm running this code via GitHub actions, it runs on cpu.
+I don't want to spend too long deploying, so I've simplified the model accordingly.
+
 ```{python}
 #| code-summary: Create a neural network
 class NeuralNet(nn.Module):
@@ -178,6 +346,11 @@ model = NeuralNet()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 ```
+
+### Evaluation
+
+And now, let's actually train and evaluate it.
+If you're following along, this step can take quite a while...
 
 ```{python}
 #| code-summary: Train a neural network
@@ -207,17 +380,21 @@ print(f"Accuracy:  {accuracy_score(y_test, y_pred):.4f}\n"
       f"Precision: {precision_score(y_test, y_pred, average='macro'):.4f}")
 ```
 
-### Performance
-
 ```{python}
 #| code-fold: true
-#| code-summary: Code for plotting confusion matrix
+#| code-summary: Code for plotting the confusion matrix
 #| fig-align: center
 conf = confusion_matrix(y_test, y_pred)
 df_cm = pd.DataFrame(conf, index=names, columns=names)
 plt.figure(figsize = (8.5,7))
 sn.heatmap(df_cm, annot=True, fmt='d');
 ```
+
+Yay, it's finished!
+The performance above is not too shabby, although bigger and better-trained models should attain a few more percent of accuracy.
+
+We can also see some of the common digit pairs that confuse the model; $2$ and $7$, $8$ and $9$, $3$ and $5$.
+Let's find some mislabeled examples to see how fair they are.
 
 ```{python}
 #| code-fold: true
@@ -253,3 +430,6 @@ for _ in range(4):
     plt.yticks([],[])
     plt.show()
 ```
+
+Personally, I think these are still very comprehensible, maybe just a bit unusual.
+Even though the model does not get these, it apparently does many more - which I think is fair to call a success.

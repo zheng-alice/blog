@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="84.565231mm"
+   height="53.358784mm"
+   viewBox="0 0 84.565231 53.358784"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.1 (9b9bdc1480, 2023-11-25, custom)"
+   sodipodi:docname="tradeoff.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.1380471"
+     inkscape:cx="142.65355"
+     inkscape:cy="133.76693"
+     inkscape:window-width="1472"
+     inkscape:window-height="800"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showgrid="false" />
+  <defs
+     id="defs1">
+    <rect
+       x="207.13367"
+       y="455.83023"
+       width="131.92719"
+       height="20.532112"
+       id="rect5" />
+    <inkscape:path-effect
+       effect="dashed_stroke"
+       id="path-effect5"
+       is_visible="true"
+       lpeversion="1"
+       numberdashes="3"
+       holefactor="0"
+       splitsegments="true"
+       halfextreme="true"
+       unifysegment="true"
+       message="Add &lt;b&gt;&quot;Fill Between Many LPE&quot;&lt;/b&gt; to add fill." />
+    <inkscape:path-effect
+       effect="fill_between_many"
+       id="path-effect4"
+       is_visible="false"
+       lpeversion="1.2"
+       linkedpaths=""
+       method="bsplinespiro"
+       join="true"
+       close="true"
+       autoreverse="true" />
+    <inkscape:path-effect
+       effect="dashed_stroke"
+       id="path-effect3"
+       is_visible="true"
+       lpeversion="1"
+       numberdashes="3"
+       holefactor="0"
+       splitsegments="true"
+       halfextreme="true"
+       unifysegment="true"
+       message="Add &lt;b&gt;&quot;Fill Between Many LPE&quot;&lt;/b&gt; to add fill." />
+    <rect
+       x="207.13367"
+       y="455.83023"
+       width="131.92719"
+       height="20.532112"
+       id="rect5-0" />
+    <rect
+       x="207.13367"
+       y="455.83023"
+       width="131.92719"
+       height="20.532112"
+       id="rect5-3" />
+    <rect
+       x="207.13367"
+       y="455.83023"
+       width="131.92719"
+       height="20.532112"
+       id="rect5-3-0" />
+    <rect
+       x="207.13367"
+       y="455.83023"
+       width="131.92719"
+       height="20.532112"
+       id="rect5-3-0-1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-26.67927,-71.334384)">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.5;stroke-dasharray:none"
+       id="rect1"
+       width="80.050896"
+       height="48.53347"
+       x="30.997143"
+       y="71.530846" />
+    <path
+       style="fill:none;stroke:#d40000;stroke-width:0.5;stroke-dasharray:none"
+       d="m 35.077046,76.230692 c 16.480336,31.361858 38.763889,39.377858 69.011504,38.978458 v 0"
+       id="path1"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;stroke:#2d5be2;stroke-width:0.493;stroke-dasharray:none;stroke-opacity:1"
+       d="m 105.18645,76.18676 c -16.480336,31.36186 -38.763886,39.37786 -69.011508,38.97846 v 0"
+       id="path1-5"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,1.3628592,-0.57885549)"
+       id="text5"
+       style="font-size:14.6667px;text-align:start;white-space:pre;shape-inside:url(#rect5);display:inline;fill:#000000;stroke:#000000;stroke-width:0.75590552;stroke-dasharray:none"
+       x="45.84668"
+       y="0"><tspan
+         x="207.13281"
+         y="469.04117"
+         id="tspan4"><tspan
+           style="font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans'"
+           id="tspan2">Model complexity</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,3.2052424,-32.155559)"
+       id="text5-0"
+       style="font-size:14.6667px;text-align:start;white-space:pre;shape-inside:url(#rect5-3);display:inline;fill:#000000;stroke:#000000;stroke-width:0.75590552;stroke-dasharray:none"
+       x="56.451385"
+       y="0"><tspan
+         x="207.13281"
+         y="469.04117"
+         id="tspan10"><tspan
+           style="font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#008000;stroke:#008000"
+           id="tspan7">Generalization</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-18.674401,-12.581705)"
+       id="text5-0-0"
+       style="font-size:14.6667px;text-align:start;white-space:pre;shape-inside:url(#rect5-3-0);display:inline;fill:#2d5be2;fill-opacity:1;stroke:#2d5be2;stroke-opacity:1;stroke-width:0.75590552;stroke-dasharray:none"
+       x="69.735916"
+       y="0"><tspan
+         x="207.13281"
+         y="469.04117"
+         id="tspan12"><tspan
+           style="font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans'"
+           id="tspan11">Estimation</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,25.97942,-13.150247)"
+       id="text5-0-0-2"
+       style="font-size:14.6667px;text-align:start;white-space:pre;shape-inside:url(#rect5-3-0-1);display:inline;fill:#000000;stroke:#000000;stroke-width:0.75590552;stroke-dasharray:none"
+       x="56.508675"
+       y="0"><tspan
+         x="207.13281"
+         y="469.04117"
+         id="tspan14"><tspan
+           style="font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';fill:#d40000;stroke:#d40000"
+           id="tspan13">Approximation</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0,-0.26458333,0.26458333,0,-94.200695,155.38312)"
+       id="text5-4"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.6667px;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';text-align:start;white-space:pre;shape-inside:url(#rect5-0);shape-padding:0;display:inline;fill:#000000;stroke:#000000;stroke-width:0.75590552;stroke-dasharray:none"
+       x="94.14724"
+       y="0"><tspan
+         x="207.13281"
+         y="469.04117"
+         id="tspan15">Error</tspan></text>
+    <path
+       style="fill:none;fill-opacity:1;stroke:#008000;stroke-width:0.5;stroke-dasharray:4, 0.5;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 40.536442,76.619387 c 19.695111,28.808143 39.580537,28.550503 58.974591,0.156209"
+       id="path5"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>

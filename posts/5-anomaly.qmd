@@ -12,7 +12,7 @@ bibliography: blog.bib
 
 ## Outliers
 
-![Image credit: [Ajitesh Kumar](https://vitalflux.com/outlier-detection-techniques-in-python/)](https://i0.wp.com/vitalflux.com/wp-content/uploads/2023/05/Outlier-detection-Python-Machine-Learning.png){width=50%}
+![Image credit: [Ajitesh Kumar](https://vitalflux.com/outlier-detection-techniques-in-python/).](https://i0.wp.com/vitalflux.com/wp-content/uploads/2023/05/Outlier-detection-Python-Machine-Learning.png){width=50%}
 
 ```{python}
 #| code-summary: Run linear regression on uncorrelated data
@@ -45,7 +45,7 @@ L_\delta(a) = \begin{cases}
 \end{cases}
 $$ {#eq-huber}
 
-![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Huber_loss)](https://upload.wikimedia.org/wikipedia/commons/c/cc/Huber_loss.svg){width=50%}
+![Image credit: [Wikipedia](https://en.wikipedia.org/wiki/Huber_loss).](https://upload.wikimedia.org/wikipedia/commons/c/cc/Huber_loss.svg){width=50%}
 
 ```{python}
 #| code-summary: Run linear regression with Huber loss
