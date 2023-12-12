@@ -393,7 +393,7 @@ sn.heatmap(df_cm, annot=True, fmt='d');
 Yay, it's finished!
 The performance above is not too shabby, although bigger and better-trained models should attain a few more percent of accuracy.
 
-We can also see some of the common digit pairs that confuse the model; $2$ and $7$, $8$ and $9$, $3$ and $5$.
+The adjacency matrix also reveals some digit pairs that commonly confuse the model.
 Let's find some mislabeled examples to see how fair they are.
 
 ```{python}
