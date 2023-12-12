@@ -137,7 +137,7 @@ In any case, at every time point $t$ we must choose one such action $a_t \in [K]
 There are various possible types of the bandit setting, but here we will only consider **stochastic** (as opposed to adversarial) losses and **multi-armed** (as opposed to linear or Gaussian process) bandits.
 
 ```pseudocode
-#| label: alg-explore-exploit
+#| label: alg-mab
 #| html-indent-size: "1.8em"
 #| html-comment-delimiter: "//"
 #| html-line-number: true
@@ -534,7 +534,7 @@ Here is a compilation of the derived bounds so far:
 |-----------|--------|---------|
 | [Explore-then-exploit](#alg-explore-exploit) | $\mathrm{O}(T^{2/3} (K \log T)^{1/3})$ | ❌ |
 | [Epsilon-greedy](#alg-epsilon-greedy) | $\mathrm{O}(t^{2/3} (K \log t)^{1/3})$ | ✅ |
-| [Successive elimination](#alg-successive-elimination) | $\mathrm{O}(\sqrt{K T \log (K T / \delta)})$ | ❌ |
+| [Successive elimination](#alg-elimination) | $\mathrm{O}(\sqrt{K T \log (K T / \delta)})$ | ❌ |
 | [UCB](#alg-ucb) | $\mathrm{O}(\sqrt{K T \log (K T / \delta)})$ | ❌ |
 
 : Summary of theoretic regret bounds.
@@ -650,5 +650,5 @@ Most notably, [Explore-then-exploit](#alg-explore-exploit) accumulates linear re
 The other algorithms gently bend down towards it instead, allowing them to achieve lower final regrets.
 
 Note that the above shouldn't be used as a definitive guide for how the algorithms compare, as it's specific to the problem instance and algorithm parameters.
-In particular, the performance of [Successive elimination](#alg-successive-elimination) is highly dependent on its artificial parameter $\delta = 1500$, as it determines how soon the trend starts bending toward a plateu.
+In particular, the performance of [Successive elimination](#alg-elimination) is highly dependent on its artificial parameter $\delta = 1500$, as it determines how soon the trend starts bending toward a plateu.
 Still, it may give an indication as to why the [UCB](#alg-ucb) algorithm and its variants are so common in practice.

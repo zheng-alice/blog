@@ -468,7 +468,7 @@ The rest is handled by the solver - everything from verifying that the problem i
 ```{python}
 #| code-summary: Solve and visualize a convex optimization problem
 #| fig-cap: A heatmap of the obtained coefficient matrix $C$.
-#| label: fig-C
+#| label: fig-heatmap
 from cvxpy import Variable, Minimize, norm, diag, Problem, ECOS
 import plotly.express as px
 
@@ -488,9 +488,9 @@ C = C.value / np.max(np.abs(C.value), axis=0)
 px.imshow(C)
 ```
 
-@fig-C above shows what the (normalized) solution looks like - you may note that it's a block diagonal matrix much like @eq-block.
+@fig-heatmap above shows what the (normalized) solution looks like - you may note that it's a block diagonal matrix much like @eq-block.
 This is due to the self-expressiveness property; points from a subspace will only have nonzero coefficients corresponding to other points from the same subspace.
-As such, we may essentially use this $C$ matrix as similarity for (spectral clustering)[#spectral-clustering].
+As such, we may essentially use this $C$ matrix as similarity for [spectral clustering](#spectral-clustering).
 
 More specifically, you may note that there are two rows with quite large coefficients whereas the others are quite small.
 This comes from minimizing the norm of $C$, leading to us to prioritize points with larger distances from the origin.

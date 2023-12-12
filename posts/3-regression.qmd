@@ -106,7 +106,7 @@ Let's suppose (for now) that we just want to regress a variable[^rv] $Y$ in term
 Our model would have two coefficients; $\beta_1$ for the effect of $X_1$ and $\beta_0$ for the intercept.
 Denoting the data sampled from the variables by $\{x_{i,1}, y_i\}_{i=1}^n$, we would then approximate[^sim] $y_i \sim \beta_0 + \beta_1 x_{i,1}$.
 
-[^rv]: As hinted by this notation, $X$, $y$ and later $\epsilon$ can be thought of either as a [random vector/variables](1-probability.qmd) or matrix/vector samples of these.
+[^rv]: As hinted by this notation, $X$, $y$ and later $\epsilon$ can be thought of either as a [random vector/variables](1-probability.qmd#random-variables) or matrix/vector samples of these.
 Here, we will stick to the latter as it directly corresponds to the provided data and makes things somewhat simpler.
 
 [^sim]: This $\sim$ notation isn't entirely precise, but can be interpreted roughly as $\approx$.

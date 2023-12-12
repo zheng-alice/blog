@@ -116,7 +116,7 @@ The outlier thus still has an effect on the regression, just not as pronounced.
 ## Changepoint detection
 
 The second example I wanted to showcase deals specifically with anomaly detection, and applies to a different framework - **online learning**.
-We have seen it make an appearance when discussing [multi-armed bandits](1-probability.qmd), which needed to collect information and learn about the environment over time.
+We have seen it make an appearance when discussing [multi-armed bandits](1-probability.qmd#multi-armed-bandits), which needed to collect information and learn about the environment over time.
 Now, we'll consider an algorithm that must similarly receive data and make decisions sequentially.
 
 ### Setting
@@ -154,7 +154,7 @@ If this change was unexpected, then identifying it and doing so as quickly as po
 
 ### CUSUM
 
-This algorithm / statistical test is fairly old by most standards, being first described by @page_continuous_1954.
+This algorithm / statistical test is fairly old by most standards, being first described by E. S. @page_continuous_1954.
 It is quite frequent in statistical testing, though I still somehow wasn't able to find a `python` implementation.
 For comparison, `MATLAB` has a built-in function [`cusum`](https://www.mathworks.com/help/signal/ref/cusum.html) function, which I'll be using as a rough guide form a ground-up implementation.
 
@@ -185,7 +185,8 @@ cumul = mean(cumsum(2*coin-1, axis=0), axis=1)
 # Display accumulated counts
 avg0 = (2*p0 - 1) * n[0]
 avg1 = (2*p1 - 1) * n[1] + avg0
-fig = px.scatter(y=cumul, labels={'x': 'Flip count', 'y': "Accumulated (Heads - Tails)"})
+fig = px.scatter(y=cumul, labels={
+    'x': 'Flip count', 'y': "Accumulated (Heads - Tails)"})
 fig.add_traces(go.Scatter(x=[n[0],n[0]+n[1]], y=[avg0, avg1],
     mode="lines", name="Changed", line=dict(dash='dash')))
 fig.add_traces(go.Scatter(x=[0,n[0]], y=[0, avg0], mode="lines", name="Original"))
