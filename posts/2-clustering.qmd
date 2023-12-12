@@ -18,7 +18,7 @@ filters:
 ## Clustering
 
 Falling within the realm of **unsupervised learning**, this task deals with unlabeled but adequately distinct data.
-While both it and [classification](4-classification.qmd) involve modeling such differences, clustering in particular starts with no prior informaiton about data labels.
+While both it and [classification](4-classification.qmd) involve modeling such differences, clustering in particular starts with no prior information about data labels.
 In cases where partial label information is known, the task is instead considered to be semi-supervised.
 
 The common goal of clustering is to separate data into **clusters** - groups such that data within them is similar and between them is different.
@@ -365,7 +365,7 @@ We then obtain the *graph Laplacian* $L = D - W$, another diagonal block matrix 
 This makes it so multiplying each block $L_i$ by a vector with all entries being $1$ produces the zero vector, making it an eigenvector of $L_i$ with a zero eigenvalue.
 Additionally, the only vectors satisfying this property are just scalar multiples of that identity vector.
 As such, the Laplacian $L$ will have its zero eigenspace spanned by precisely $k$ such identity vectors.
-This adresses both of our previous problems, making it so we only have to find $k$ out of $n$ eigenvectors.
+This addresses both of our previous problems, making it so we only have to find $k$ out of $n$ eigenvectors.
 Using [inverse iteration](https://en.wikipedia.org/wiki/Inverse_iteration) will obtain these eigenvectors only, and do so very efficiently.
 Putting the eigenvectors together as a matrix would then make its rows indicators for which cluster a particular point belongs to.
 In case there is still any ambiguity, the rows can be grouped together using a simpler clustering algorithm like [$k$-means](https://en.wikipedia.org/wiki/K-means_clustering).
@@ -387,7 +387,7 @@ which is precisely [Hooke's law](https://en.wikipedia.org/wiki/Hooke%27s_law).
 Thus given an initial displacement $v$, the graph will undergo simple harmonic motion with frequency $\lambda^2$.
 In other words, the eigenpairs $(\lambda, v)$ of $L$ actually describe the **resonant frequencies** $\lambda^2$ and corresponding **vibration modes** of its graph.
 It is for this reason that eigenvalues are crucial to analyzing mechanical resonance - where the graph represents connected parts of a physical object.
-This could be applied to, for intance, designing buildings that are resistant to strong winds and earthquakes.
+This could be applied to, for instance, designing buildings that are resistant to strong winds and earthquakes.
 
 In our case we saw that the similarity graph had some zero eigenvalues.
 This corresponds to zero frequency - i.e., once we displace the nodes of a single cluster, it experiences no force from the others and just stays in the same place.
@@ -401,7 +401,7 @@ A simplified image of what such data could look like is seen in @fig-subspaces b
 ![Three linear subspaces. Figure by @elhamifar_sparse_2013.](subspaces.svg){width=50% fig-align="center" #fig-subspaces}
 
 The point where the lines and plane intersect is the origin.
-You may note that this matches the mathematical definiton of linear subspaces, i.e., non-empty and closed under addition and scalar multiplication.
+You may note that this matches the mathematical definition of linear subspaces, i.e., non-empty and closed under addition and scalar multiplication.
 Alternatively, we may pick any number of vectors and have their span be a linear subspaces.
 Any point in the subspaces would then be a linear combination of such vectors, which are themselves points in the subspace.
 

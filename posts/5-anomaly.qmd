@@ -66,7 +66,7 @@ This actually works fine in practice, though with a caveat that the outlier may 
 If we want to catch this, we'll need to fit a trend while excluding one point at a time from the data - which is fairly tedious.
 
 In addition, maybe we don't want to entirely remove the outlier, but just mitigate it to not be as disruptive.
-This is useful when it's hard to justify to just throw away data for whichever reason, or when the appropriately adjusted effects of outliers are desireable.
+This is useful when it's hard to justify to just throw away data for whichever reason, or when the appropriately adjusted effects of outliers are desirable.
 
 ### Huber loss
 
@@ -115,7 +115,7 @@ The outlier thus still has an effect on the regression, just not as pronounced.
 
 ## Changepoint detection
 
-The second example I wanted to showcase deals specifically with anomally detection, and applies to a different framework - **online learning**.
+The second example I wanted to showcase deals specifically with anomaly detection, and applies to a different framework - **online learning**.
 We have seen it make an appearance when discussing [multi-armed bandits](1-probability.qmd), which needed to collect information and learn about the environment over time.
 Now, we'll consider an algorithm that must similarly receive data and make decisions sequentially.
 
@@ -126,7 +126,7 @@ We may additionally consider a specific instance called **step detection**, wher
 So, you take this data and compute some statistics, maybe a windowed average to approximate the mean, and fairly easily narrow down the point where the shift happens.
 Fairly easy, right?
 
-Now, imagine that you're given one point of this data at a time, and every time asked to make a decision on whether the change occured.
+Now, imagine that you're given one point of this data at a time, and every time asked to make a decision on whether the change occurred.
 You can't just wait until the end to announce your decision, as you're retroactively penalized for every data point you consume after the change happens.
 You also can't announce a change when you aren't very certain, as you're also penalized for doing so before the change actually happened.
 So, what to do?
@@ -225,7 +225,7 @@ def cusum(X, lim=5, w=0, mean=None, std=None, plot=True):
 
     ARGUMENTS:
     lim: number of standard deviations in drift to be detected.
-    w: number of standard devitaions as damping coefficient.
+    w: number of standard deviations as damping coefficient.
     mean: expected mean or None to compute from 25 leading samples.
     std: expected standard deviation or None to compute from 25 leading samples.
     plot: whether to display a visualization.
@@ -273,6 +273,6 @@ print(f"Detected changepoint at year {nile['time'][change]}.")
 As seen by the control chart, CUSUM predicts a change in the year 1905, only 6 years after the dam's construction.
 This delay generally depends on the value of the threshold, which shouldn't be lowered too much due to a higher chance of false positives.
 If on the contrary we set the threshold too high, the algorithm would still likely predict it, just after some additional time.
-If we additionally had wanted to find the year where the change occured, we could trace the [red]{.red} line from the control chart back to when it first started drifting down, giving us pretty much the exact year construction was finished.
+If we additionally had wanted to find the year where the change occurred, we could trace the [red]{.red} line from the control chart back to when it first started drifting down, giving us pretty much the exact year construction was finished.
 
 In summary, the CUSUM algorithm lets us detect a changepoint *anomaly* in time-series data in an online manner.

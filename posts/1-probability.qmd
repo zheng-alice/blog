@@ -42,7 +42,7 @@ Let $\Omega = \{😸,😿\}$ denote the outcomes of an experiment, with associat
 What is the average outcome of this experiment?
 Certainly, it can't be $0.5😸 + 0.5😿$; that quantity doesn't make sense.
 We instead need something we can *count*, such as the *number of happy cats*.
-This we can denode by a **random variable** $X$, something that maps event outcomes in $\Omega$ to measurable quantities in $E$, which in this case is $\{0, 1\}$.
+This we can denote by a **random variable** $X$, something that maps event outcomes in $\Omega$ to measurable quantities in $E$, which in this case is $\{0, 1\}$.
 Let $X(😸) = 1$ and $X(😿) = 0$; then, to get the probability of a particular outcome in $E$ we must find all entries in $\Omega$ that map to it and sum their probabilities.
 This can be written as
 $$
@@ -134,7 +134,7 @@ Maybe they belong to the same, now much more tricky bandit.
 Or, maybe they model the possibility of playing different games in the same casino.
 In any case, at every time point $t$ we must choose one such action $a_t \in [K]$ to play, only learning information about its underlying distribution through the rewards we receive.
 
-There are various possible types of the bandit setting, but here we will only consider **stochastic** (as opposed to adversarial) losses and **multi-armed** (as opposed to linear or gaussian process) bandits.
+There are various possible types of the bandit setting, but here we will only consider **stochastic** (as opposed to adversarial) losses and **multi-armed** (as opposed to linear or Gaussian process) bandits.
 
 ```pseudocode
 #| label: alg-explore-exploit
@@ -165,7 +165,7 @@ $$
 \mathcal{R}_T = \sum_{t=1}^T z_t[a_t] - \min_i \sum_{t=1}^T z_t[i]\ .
 $$ {#eq-regret}
 
-Such a definition makes regret a useful metric in many situations, even when experiencing persintent penalties or unreasonable adversaries.
+Such a definition makes regret a useful metric in many situations, even when experiencing persistent penalties or unreasonable adversaries.
 In particular, it evaluates performance against the best possible fixed action in hindsight - a value that will compensate for the above scenarios.
 Note that the definition given in @eq-regret makes $\mathcal{R}_T$ a [random variable](#random-variables), meaning that in practice we aim to bound $\mathbb{E}[\mathcal{R}_T]$, the expected regret.[^pseudo]
 
@@ -202,7 +202,7 @@ We start with a simple algorithm that does the two stages separately [@ji_online
 \end{algorithm}
 ```
 
-We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm inidvidually.
+We wish to bound the probability of getting good approximations on all arms, which we start by bounding each arm individually.
 That is, we want to bound the deviation of its true mean $\mu(a)$ from its approximation $\hat{\mu}(a)$ after that arm has been pulled $N$ times.
 Let $\beta_N = \sqrt{\frac{2 \log T}{N}}$, by [Hoeffding's inequality](#thm-hoeffding),
 $$
@@ -453,7 +453,7 @@ class SuccessiveElimination:
 ### UCB
 
 Since the event of eliminating an arm may be quite rare, we may instead just sample the arm with the highest $\mathrm{UCB}_t(a)$.
-This strategy demonstrates a principle known as *optimism in the face of uncertainty* @ji_online_2022 [Lecture 15] - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.
+This strategy demonstrates a principle known as *optimism in the face of uncertainty* [@ji_online_2022, Lecture 15] - that is, both arms that have high sample mean and arms with fewer samples will have a larger UCB and thus more likely to get chosen.
 ```pseudocode
 #| label: alg-ucb
 #| html-indent-size: "1.8em"
@@ -651,4 +651,4 @@ The other algorithms gently bend down towards it instead, allowing them to achie
 
 Note that the above shouldn't be used as a definitive guide for how the algorithms compare, as it's specific to the problem instance and algorithm parameters.
 In particular, the performance of [Successive elimination](#alg-successive-elimination) is highly dependent on its artificial parameter $\delta = 1500$, as it determines how soon the trend starts bending toward a plateu.
-Still, it may give an indication as to why the [UCB](#alg-ucb) algorithm and its varians are so common in practice.
+Still, it may give an indication as to why the [UCB](#alg-ucb) algorithm and its variants are so common in practice.

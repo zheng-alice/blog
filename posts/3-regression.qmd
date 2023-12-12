@@ -18,7 +18,7 @@ This makes it applicable to a variety of problems where we need to model an unkn
 Some examples include:
 
 * Predicting the rating based off of a text of an online review.
-* Computing how much a self-driving car should accelerate/deccelerate/turn (based on prior human data).
+* Computing how much a self-driving car should accelerate/decelerate/turn (based on prior human data).
 * Hypothesis testing for whether one variable correlates with another in an experiment.
 
 We create a (simplified, artificial) dataset along the lines of the last example.
@@ -256,7 +256,7 @@ show(px.scatter(exp_df, x='x', y='y', trendline='ols',
 
 Wait, where are the lines?
 The linear lines?
-Turns out our brief description of [linear regression](#linear-regression) comes with a huge caveat: such regression is *linear* beause of the lineariarity of its *underlying models*, not necessarily because it fits straight lines.
+Turns out our brief description of [linear regression](#linear-regression) comes with a huge caveat: such regression is *linear* because of the linearity of its *underlying models*, not necessarily because it fits straight lines.
 As we have used variables ($x^2$, $\log(y)$) nonlinear with respect to the original data, the trendlines on the untransformed axes can inherit this nonlinearity.
 The latter $\log$-transform is actually a fundamental concept in **generalized linear models** (GLMs), a type of linear regression models using a *link function* to map their linear model to nonlinear dependent variables.
 Despite this, GLMs are still considered to be *linear* - after all, they aren't generalized *nonlinear* models (which are actually their own thing).
@@ -268,7 +268,7 @@ On the latter, the $y \sim x^2 + x$ fit performs reasonably well, though you may
 Additionally, it's evident that the exponential dataset suffers from **heteroscedasticity** - a phenomenon where points "fan out" more for larger values.
 Though this can't be easily seen above, it poses a problem for the polynomial fit, causing it to prioritize fitting the larger values more accurately at the cost of ignoring the lower values.
 For such data, we typically care about the *relative residuals*, which are perfectly captured by the $\log$-transform.
-Afterall, the transformed data will be exactly the linear data, for which an OLS fit prioritizes all residuals equally and thus works extremely well.
+After all, the transformed data will be exactly the linear data, for which an OLS fit prioritizes all residuals equally and thus works extremely well.
 
 
 ## Nonlinear regression
@@ -338,7 +338,7 @@ show(px.scatter(exp_df, x='x', y='y', trendline='lowess',
 The nonlinear fit, seen on the left, is fairly good - probably on par with the polynomial fit.
 While all the trouble we have gone through to get this okay fit may not seem worth it, it's extremely useful in cases where the function $f$ is complex but known ahead of time - such as in [mathematical modeling](https://en.wikipedia.org/wiki/Mathematical_model).
 I have taken a class on just that, and we have used nonlinear curve fitting tools like this all the time.
-One particulary memorable example involved deriving the dynamics of an outbreak of an infectious disease with an SEIRS model and then using nonlinear regression to fit its parameters.
+One particularly memorable example involved deriving the dynamics of an outbreak of an infectious disease with an SEIRS model and then using nonlinear regression to fit its parameters.
 
 You'll notice that I threw in a couple of bonus fits there; both are examples of a different kind of regression,
 
@@ -353,7 +353,7 @@ This method Support Vector Regression (SVR), that, if [`MATLAB`](https://www.mat
 
 ```{python}
 #| code-fold: true
-#| code-summary: Fit a multiratiate regression model
+#| code-summary: Fit a multivariate regression model
 #| label: fig-multi
 #| fig-cap: Support Vector Regression on the Iris dataset.
 #| warning: false

@@ -13,7 +13,7 @@ categories:
 
 
 Classification is a **supervised learning** method, much like [regression](3-regression.qmd).
-Unlike [regression](3-regresison.qmd), it predicts features not continuous, but categorical and unordered.
+Unlike [regression](3-regression.qmd), it predicts features not continuous, but categorical and unordered.
 Such features then denote the *class* that each point belongs to - not unlike assigning a cluster.
 Indeed, both classification and [clustering](2-clustering.qmd) work with data that is typically sufficiently distinct, that they must then learn to separate into groups.
 The crucial difference is that classification is given the *labels* of the training data, which it then must generalize to the *testing* set.
@@ -94,7 +94,7 @@ The following graphic illustrates this tradeoff (occasionally also referred to a
 
 So, is all lost?
 Not exactly; the conditions aren't directly contradictory - we could minimize both by finding an $\mathcal{H}$ that contains as few models as possible, but the ones it contains are accurate at modeling the desired data.
-This is a task easier said than done, as we need to carefully discard all unneccessary models, while making sure the important ones are retained.
+This is a task easier said than done, as we need to carefully discard all unnecessary models, while making sure the important ones are retained.
 The search for such a hypothesis class $\mathcal{H}$ is perhaps what drives the creation of many various types of machine learning algorithms.
 
 
@@ -274,7 +274,7 @@ Due to the high-dimensionality of the data, we now need to look beyond classical
 One approach that has gained widespread popularity over the last decade is **deep learning**, i.e., models with many layers to model complex semantics.
 
 Such models are commonly **neural networks** - architectures supposedly inspired by neurons in a brain.
-Each neuron takes inputs from several others, aggregates them (plus a bias), thes passes through an activation function and onto the next layer.
+Each neuron takes inputs from several others, aggregates them (plus a bias), then passes through an activation function and onto the next layer.
 The nonlinearity of the activation step in particular makes it possible for complex behaviors to arise from this structure.
 Another important reason for these networks being so widespread is that the neurons are neatly arranged in layers, making their associated operations efficiently computable via *matrix multiplication* - an operation with abundant hardware dedicated to it thanks to computer graphics.
 
@@ -403,13 +403,6 @@ Let's find some mislabeled examples to see how fair they are.
 import torchvision
 import numpy as np
 
-def imshow(img):
-    img = img / 2 + 0.5     # unnormalize
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
-
-
 # Get samples where mistakes were made
 def wrong(dataloader):
     for i, (images, labels) in enumerate(testloader):
@@ -417,7 +410,6 @@ def wrong(dataloader):
             label, pred = label.item(), y_pred[batch_size*i+j].item()
             if pred != label:
                 yield (image, label, pred)
-
 
 # Plot several examples
 loader = wrong(testloader)
