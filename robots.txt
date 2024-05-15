@@ -1,1 +1,1 @@
-Sitemap: https://github.com/adidenkova/blog/sitemap.xml
+Sitemap: https://zheng-alice.github.io/blog/sitemap.xml
