@@ -12,7 +12,7 @@ website:
         text: Home
       - href: about.qmd
         text: About
-  repo-url: https://github.com/adidenkova/blog
+  repo-url: https://github.com/zheng-alice/blog
   repo-actions: [source]
 
 format:
