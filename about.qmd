@@ -1,12 +1,12 @@
 ---
-title: "Alice Didenkova"
+title: "Alice Zheng"
 about:
   template: trestles
   image: profile.jpg
   links:
     - icon: github
       text: Github
-      href: https://github.com/adidenkova
+      href: https://github.com/zheng-alice
 format:
   html:
     toc: false

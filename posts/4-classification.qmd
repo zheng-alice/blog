@@ -62,7 +62,7 @@ $$
 R_\text{emp}(f) = \frac{1}{n} \sum_{i=1}^n L(f(x_i), y_i)\ .
 $$ {#eq-empirical}
 
-Outside of learning theory, risk and empirical risk may be referred to as testing and training accuracy.
+Outside of learning theory, risk and empirical risk may be referred to as testing and training loss.
 
 The next question is how to find our approximation $\hat{f}$.
 To do this, we need to start with picking a *hypothesis class* $\mathcal{H}$, representing all possible models (and parameters) we could potentially end up with.
